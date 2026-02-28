@@ -1,5 +1,3 @@
-import Image from 'next/image'
-
 const VEHICLES = [
   {
     id: 1,
@@ -53,14 +51,11 @@ export default function Fleet() {
               key={vehicle.id}
               className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:-translate-y-2 transition-all"
             >
-              <div className="relative h-56 w-full">
-                <Image
-                  src={vehicle.image}
-                  alt={vehicle.name}
-                  fill
-                  className="object-cover"
-                />
-              </div>
+              <img
+                src={vehicle.image}
+                alt={vehicle.name}
+                className="w-full h-56 object-cover"
+              />
               <div className="p-6">
                 <h3 className="text-xl font-bold text-primary mb-3">
                   {vehicle.name}
