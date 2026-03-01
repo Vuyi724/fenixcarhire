@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import Navigation from '@/components/Navigation'
 import Hero from '@/components/Hero'
 import About from '@/components/About'
@@ -13,52 +13,43 @@ import Footer from '@/components/Footer'
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('home')
-  const bookingRef = useRef<HTMLDivElement>(null)
 
   const handleTabChange = (tabId: string) => {
     setActiveTab(tabId)
-    if (tabId === 'booking' && bookingRef.current) {
-      setTimeout(() => {
-        bookingRef.current?.scrollIntoView({ behavior: 'smooth' })
-      }, 0)
-    }
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const handleBookingClick = () => {
     setActiveTab('booking')
-    if (bookingRef.current) {
-      setTimeout(() => {
-        bookingRef.current?.scrollIntoView({ behavior: 'smooth' })
-      }, 0)
-    }
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }, 0)
   }
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <Navigation activeTab={activeTab} onTabChange={handleTabChange} />
 
-      {activeTab === 'home' && (
-        <>
-          <Hero onBookingClick={handleBookingClick} />
-          <About />
-        </>
-      )}
+      <main className="flex-1">
+        {activeTab === 'home' && (
+          <>
+            <Hero onBookingClick={handleBookingClick} />
+            <About />
+          </>
+        )}
 
-      {activeTab === 'fleet' && <Fleet />}
+        {activeTab === 'fleet' && <Fleet />}
 
-      {activeTab === 'services' && <Services />}
+        {activeTab === 'services' && <Services />}
 
-      {activeTab === 'pricing' && <Pricing />}
+        {activeTab === 'pricing' && <Pricing />}
 
-      {activeTab === 'booking' && (
-        <div ref={bookingRef}>
-          <BookingForm />
-        </div>
-      )}
+        {activeTab === 'booking' && <BookingForm />}
 
-      {activeTab === 'contact' && <Contact />}
+        {activeTab === 'contact' && <Contact />}
+      </main>
 
       <Footer />
-    </>
+    </div>
   )
 }
