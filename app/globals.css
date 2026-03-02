@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #1a2e5e;
+  --accent: #ff7f00;
+  --dark: #0d1b3d;
+  --light: #f5f5f5;
+  --gray-200: #e8e8e8;
+  --gray-300: #d0d0d0;
+  --gray-600: #666666;
+  --gray-700: #333333;
+  --white: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--light);
+  color: var(--gray-700);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  color: var(--dark);
+}
+
+@layer components {
+  .primary-btn {
+    @apply inline-flex items-center justify-center bg-[#ff7f00] text-white px-8 py-4 rounded-lg font-semibold transition-all hover:bg-[#e67e00] hover:shadow-lg;
+  }
+  
+  .secondary-btn {
+    @apply inline-flex items-center justify-center bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold transition-all hover:bg-white hover:text-[#1a2e5e];
+  }
+}
