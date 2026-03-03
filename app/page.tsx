@@ -1,4 +1,11 @@
+'use client'
+
+import Link from 'next/link'
+import { useAuth } from '@/app/auth-context'
+
 export default function Home() {
+  const { user } = useAuth()
+
   return (
     <main>
       <section className="bg-gradient-to-r from-[#1a2e5e] to-[#0d1b3d] text-white py-20 px-6">
@@ -6,9 +13,20 @@ export default function Home() {
           <h1 className="text-5xl font-bold mb-4">Fenix Car Hire</h1>
           <p className="text-xl mb-8">For All Your Rental Needs in Eswatini</p>
           <div className="flex gap-4 justify-center flex-wrap">
-            <button className="bg-[#ff7f00] text-white px-8 py-4 rounded-lg font-semibold hover:bg-orange-600">
-              Book Now
-            </button>
+            {user ? (
+              <Link href="/cars" className="bg-[#ff7f00] text-white px-8 py-4 rounded-lg font-semibold hover:bg-orange-600">
+                Browse Cars
+              </Link>
+            ) : (
+              <>
+                <Link href="/login" className="bg-[#ff7f00] text-white px-8 py-4 rounded-lg font-semibold hover:bg-orange-600">
+                  Book Now
+                </Link>
+                <Link href="/signup" className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#1a2e5e]">
+                  Sign Up
+                </Link>
+              </>
+            )}
             <a href="https://wa.me/2686829797" target="_blank" rel="noopener noreferrer" className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#1a2e5e]">
               WhatsApp Us
             </a>
