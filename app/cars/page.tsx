@@ -62,23 +62,23 @@ export default function CarsPage() {
 
   if (authLoading || !user) {
     return (
-      <main className="min-h-screen flex items-center justify-center">
-        <p>Loading...</p>
+      <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-gray-100">
+        <p className="text-gray-600">Loading...</p>
       </main>
     )
   }
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-gray-100">
       {/* Navigation */}
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold text-[#1a2e5e]">
+      <nav className="bg-white/80 backdrop-blur-md shadow-sm border-b border-blue-100">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+          <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
             Fenix Car Hire
           </Link>
           <div className="flex gap-4 items-center">
-            <span className="text-gray-600">{user.email}</span>
-            <Link href="/dashboard" className="text-[#ff7f00] font-semibold hover:underline">
+            <span className="text-sm text-gray-600">{user.email}</span>
+            <Link href="/dashboard" className="text-blue-600 font-semibold hover:text-blue-800 transition">
               My Bookings
             </Link>
             <button
@@ -86,7 +86,7 @@ export default function CarsPage() {
                 supabase.auth.signOut()
                 router.push('/')
               }}
-              className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+              className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition"
             >
               Logout
             </button>
@@ -94,39 +94,53 @@ export default function CarsPage() {
         </div>
       </nav>
 
-      {/* Filters */}
-      <div className="bg-white border-b">
-        <div className="max-w-6xl mx-auto px-6 py-8">
-          <h1 className="text-3xl font-bold text-[#1a2e5e] mb-6">Available Cars</h1>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {/* Hero Section with Background */}
+      <div 
+        className="relative py-12 bg-cover bg-center overflow-hidden"
+        style={{
+          backgroundImage: 'url(/images/car-bg.jpg)',
+          backgroundColor: '#1e3a5f'
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/70 via-blue-800/60 to-gray-900/50" />
+        <div className="relative max-w-7xl mx-auto px-6">
+          <h1 className="text-5xl font-bold text-white mb-2 text-balance">Premium Car Selection</h1>
+          <p className="text-blue-100 text-lg">Choose from our latest fleet of luxury and reliable vehicles</p>
+        </div>
+      </div>
+
+      {/* Filters Section */}
+      <div className="bg-white border-b border-blue-100 shadow-sm">
+        <div className="max-w-7xl mx-auto px-6 py-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Pickup Date
               </label>
               <input
                 type="date"
                 value={pickupDate}
                 onChange={(e) => setPickupDate(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Return Date
               </label>
               <input
                 type="date"
                 value={returnDate}
                 onChange={(e) => setReturnDate(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
               />
             </div>
-            <div className="flex items-end">
+            <div className="flex items-end md:col-span-2">
               <button
                 onClick={fetchCars}
-                className="w-full bg-[#ff7f00] text-white py-2 rounded-lg font-semibold hover:bg-orange-600"
+                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-2.5 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition shadow-md"
               >
-                Search
+                Search Available Cars
               </button>
             </div>
           </div>
@@ -134,39 +148,71 @@ export default function CarsPage() {
       </div>
 
       {/* Cars Grid */}
-      <div className="max-w-6xl mx-auto px-6 py-12">
+      <div className="max-w-7xl mx-auto px-6 py-16">
         {loading ? (
-          <p className="text-center text-gray-600">Loading cars...</p>
+          <div className="text-center">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <p className="text-gray-600 mt-4">Loading available cars...</p>
+          </div>
         ) : cars.length === 0 ? (
-          <p className="text-center text-gray-600">No cars available for selected dates</p>
+          <div className="text-center py-12">
+            <p className="text-gray-600 text-lg">No cars available for selected dates. Please try different dates.</p>
+          </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {cars.map((car) => (
-              <div key={car.id} className="bg-white rounded-lg shadow-md hover:shadow-lg overflow-hidden">
-                <img
-                  src={car.image_url}
-                  alt={`${car.brand} ${car.model}`}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-[#1a2e5e] mb-2">
-                    {car.brand} {car.model}
-                  </h3>
-                  <div className="space-y-2 text-gray-600 mb-4 text-sm">
-                    <p>Year: {car.year}</p>
-                    <p>Seats: {car.seats}</p>
-                    <p>Transmission: {car.transmission}</p>
-                    <p>Fuel: {car.fuel_type}</p>
+              <div 
+                key={car.id} 
+                className="group bg-white rounded-xl shadow-md hover:shadow-xl overflow-hidden transition-all duration-300 transform hover:-translate-y-1"
+              >
+                {/* Image Container */}
+                <div className="relative h-48 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
+                  <img
+                    src={car.image_url}
+                    alt={`${car.brand} ${car.model}`}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
+                  <div className="absolute top-3 right-3 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                    Available
                   </div>
-                  <div className="flex justify-between items-center">
-                    <div className="text-2xl font-bold text-[#ff7f00]">
-                      E${car.daily_rate}/day
+                </div>
+
+                {/* Content */}
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-1">
+                    {car.brand} <span className="text-blue-600">{car.model}</span>
+                  </h3>
+                  <p className="text-sm text-gray-500 mb-4">{car.year}</p>
+
+                  {/* Specs Grid */}
+                  <div className="grid grid-cols-2 gap-3 mb-6">
+                    <div className="bg-gray-50 rounded-lg p-3">
+                      <p className="text-xs text-gray-600 font-semibold">SEATS</p>
+                      <p className="text-lg font-bold text-gray-900">{car.seats}</p>
+                    </div>
+                    <div className="bg-gray-50 rounded-lg p-3">
+                      <p className="text-xs text-gray-600 font-semibold">TRANSMISSION</p>
+                      <p className="text-sm font-bold text-gray-900">{car.transmission}</p>
+                    </div>
+                    <div className="bg-gray-50 rounded-lg p-3 col-span-2">
+                      <p className="text-xs text-gray-600 font-semibold">FUEL TYPE</p>
+                      <p className="text-sm font-bold text-gray-900">{car.fuel_type}</p>
+                    </div>
+                  </div>
+
+                  {/* Footer */}
+                  <div className="border-t border-gray-200 pt-4 flex justify-between items-center">
+                    <div>
+                      <p className="text-xs text-gray-600 mb-1">Daily Rate</p>
+                      <p className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">
+                        E${car.daily_rate}
+                      </p>
                     </div>
                     <Link
                       href={`/booking/${car.id}`}
-                      className="bg-[#ff7f00] text-white px-4 py-2 rounded-lg font-semibold hover:bg-orange-600"
+                      className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-5 py-2.5 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition shadow-md"
                     >
-                      Book Now
+                      Book
                     </Link>
                   </div>
                 </div>
