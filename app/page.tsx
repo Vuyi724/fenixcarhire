@@ -167,16 +167,24 @@ export default function Home() {
           <h2 className="text-4xl font-bold text-center mb-12 text-gray-900">Contact Us</h2>
           <div className="space-y-6 text-center">
             <div className="bg-white p-6 rounded-xl shadow-sm border border-blue-100">
-              <p className="text-gray-600 mb-2">Cell:</p>
-              <p className="text-2xl font-bold text-blue-600">+268 682 9797</p>
-            </div>
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-blue-100">
-              <p className="text-gray-600 mb-2">Tel:</p>
-              <p className="text-2xl font-bold text-blue-600">+268 2422 1045</p>
+              <p className="text-gray-600 mb-2">Mobile:</p>
+              <p className="text-2xl font-bold text-blue-600">(+268) 768 29797 / 798 46935</p>
+              <a href="tel:+26876829797" className="inline-block mt-3 text-blue-600 hover:text-blue-800 font-semibold text-sm">
+                Call Now
+              </a>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm border border-blue-100">
               <p className="text-gray-600 mb-2">Email:</p>
-              <p className="text-lg font-bold text-blue-600">fenixreception@sempeerfi.co.sz</p>
+              <p className="text-lg font-bold text-blue-600">reception@fenix.co.sz</p>
+              <a href="mailto:reception@fenix.co.sz" className="inline-block mt-3 text-blue-600 hover:text-blue-800 font-semibold text-sm">
+                Send Email
+              </a>
+            </div>
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-blue-100">
+              <p className="text-gray-600 mb-2">WhatsApp:</p>
+              <a href="https://wa.me/26876829797" target="_blank" rel="noopener noreferrer" className="inline-block text-2xl font-bold text-blue-600 hover:text-blue-800">
+                (+268) 768 29797
+              </a>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm border border-blue-100">
               <p className="text-gray-600 mb-2">Location:</p>
