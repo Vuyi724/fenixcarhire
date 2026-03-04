@@ -50,7 +50,7 @@ export default function Home() {
                   </Link>
                 </>
               )}
-              <a href="https://wa.me/2686829797" target="_blank" rel="noopener noreferrer" className="border-2 border-gray-400 text-gray-700 px-8 py-3.5 rounded-lg font-semibold hover:bg-gray-50 transition">
+              <a href="https://wa.me/26876829797" target="_blank" rel="noopener noreferrer" className="border-2 border-gray-400 text-gray-700 px-8 py-3.5 rounded-lg font-semibold hover:bg-gray-50 transition">
                 WhatsApp
               </a>
             </div>
