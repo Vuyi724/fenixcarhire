@@ -93,17 +93,25 @@ export default function Home() {
           <h2 className="text-4xl font-bold text-center mb-12 text-gray-900">Our Premium Fleet</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { name: 'Double-Cab Pickup', desc: 'Perfect for cargo and upcountry trips', icon: '🚚' },
-              { name: 'SUV / 4x4', desc: 'Spacious and rugged for adventures', icon: '🚙' },
-              { name: 'Sedan', desc: 'Fuel-efficient for city travel', icon: '🚗' },
-              { name: 'Van', desc: 'Comfortable for large groups', icon: '🚐' },
-              { name: 'Executive SUV', desc: 'Premium comfort for special occasions', icon: '🏎️' },
-              { name: 'Compact Car', desc: 'Affordable and easy to maneuver', icon: '🚘' },
+              { name: 'Double-Cab Pickup', desc: 'Perfect for cargo and upcountry trips', image: '/images/pickup-truck.jpg' },
+              { name: 'SUV / 4x4', desc: 'Spacious and rugged for adventures', image: '/images/suv-4x4.jpg' },
+              { name: 'Sedan', desc: 'Fuel-efficient for city travel', image: '/images/car-sedan.jpg' },
+              { name: 'Van', desc: 'Comfortable for large groups', image: '/images/passenger-van.jpg' },
+              { name: 'Executive SUV', desc: 'Premium comfort for special occasions', image: '/images/executive-suv.jpg' },
+              { name: 'Compact Car', desc: 'Affordable and easy to maneuver', image: '/images/compact-car.jpg' },
             ].map((vehicle) => (
-              <div key={vehicle.name} className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-all hover:-translate-y-1 border border-blue-100">
-                <div className="text-4xl mb-4">{vehicle.icon}</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{vehicle.name}</h3>
-                <p className="text-gray-600">{vehicle.desc}</p>
+              <div key={vehicle.name} className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all hover:-translate-y-1 border border-blue-100 overflow-hidden group">
+                <div className="relative h-48 bg-gray-200 overflow-hidden">
+                  <img
+                    src={vehicle.image}
+                    alt={vehicle.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">{vehicle.name}</h3>
+                  <p className="text-gray-600">{vehicle.desc}</p>
+                </div>
               </div>
             ))}
           </div>
