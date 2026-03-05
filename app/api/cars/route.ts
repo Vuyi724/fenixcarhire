@@ -7,18 +7,24 @@ export async function GET(request: NextRequest) {
     const pickupDate = searchParams.get('pickup_date')
     const returnDate = searchParams.get('return_date')
 
-    let query = supabase.from('cars').select('*')
+    // Get all cars
+    const { data: cars, error } = await supabase
+      .from('cars')
+      .select('*')
+      .order('brand', { ascending: true })
 
-    // If dates provided, filter available cars
+    if (error) {
+      console.error('[v0] Error fetching cars:', error)
+      return NextResponse.json({ error: error.message }, { status: 400 })
+    }
+
+    if (!cars || cars.length === 0) {
+      return NextResponse.json({ data: [] })
+    }
+
+    // If dates provided, filter available cars based on bookings
     if (pickupDate && returnDate) {
-      // Get cars that don't have conflicting bookings
-      const { data: cars } = await query.eq('status', 'available')
-
-      if (!cars) {
-        return NextResponse.json({ data: [] })
-      }
-
-      // Check availability for each car
+      // Check for conflicting bookings
       const { data: bookings } = await supabase
         .from('bookings')
         .select('car_id')
@@ -29,17 +35,14 @@ export async function GET(request: NextRequest) {
       const bookedCarIds = bookings?.map(b => b.car_id) || []
       const availableCars = cars.filter(car => !bookedCarIds.includes(car.id))
 
+      console.log('[v0] Found', availableCars.length, 'available cars for dates', pickupDate, 'to', returnDate)
       return NextResponse.json({ data: availableCars })
     }
 
-    const { data, error } = await query.eq('status', 'available')
-
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 400 })
-    }
-
-    return NextResponse.json({ data })
+    console.log('[v0] Returning all', cars.length, 'cars')
+    return NextResponse.json({ data: cars })
   } catch (error) {
+    console.error('[v0] Error in GET /api/cars:', error)
     return NextResponse.json(
       { error: 'Failed to fetch cars' },
       { status: 500 }
