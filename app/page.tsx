@@ -190,6 +190,12 @@ export default function Home() {
               <p className="text-gray-600 mb-2">Location:</p>
               <p className="text-lg font-bold text-gray-900">Sidwashini, Mbabane</p>
             </div>
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-blue-100">
+              <p className="text-gray-600 mb-2">Follow Us:</p>
+              <a href="https://facebook.com/fenixcarhire" target="_blank" rel="noopener noreferrer" className="inline-block text-2xl font-bold text-blue-600 hover:text-blue-800">
+                Facebook
+              </a>
+            </div>
           </div>
         </div>
       </section>
