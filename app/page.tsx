@@ -57,7 +57,7 @@ export default function Home() {
           </div>
           <div className="relative h-96 md:h-full min-h-96">
             <img
-              src="/images/car-hero.jpg"
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image15-jgLAy9QGHOtRi04fW4CU8YS3oOwPmT.jpeg"
               alt="Premium car"
               className="w-full h-full object-cover rounded-2xl shadow-2xl"
             />
@@ -70,7 +70,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="relative h-80">
             <img
-              src="/images/car-sedan.jpg"
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image14-2nvNFBW9aTPOM7FOC39RaA6UFHuGd6.jpeg"
               alt="Sedan car"
               className="w-full h-full object-cover rounded-xl shadow-xl"
             />
@@ -93,12 +93,12 @@ export default function Home() {
           <h2 className="text-4xl font-bold text-center mb-12 text-gray-900">Our Premium Fleet</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { name: 'Double-Cab Pickup', desc: 'Perfect for cargo and upcountry trips', image: '/images/pickup-truck.jpg' },
-              { name: 'SUV / 4x4', desc: 'Spacious and rugged for adventures', image: '/images/suv-4x4.jpg' },
-              { name: 'Sedan', desc: 'Fuel-efficient for city travel', image: '/images/car-sedan.jpg' },
-              { name: 'Van', desc: 'Comfortable for large groups', image: '/images/passenger-van.jpg' },
-              { name: 'Executive SUV', desc: 'Premium comfort for special occasions', image: '/images/executive-suv.jpg' },
-              { name: 'Compact Car', desc: 'Affordable and easy to maneuver', image: '/images/compact-car.jpg' },
+              { name: 'Double-Cab Pickup', desc: 'Perfect for cargo and upcountry trips', image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%203-mje93k6c5ZS3CnpfhugUoTpJtbzlez.jpeg' },
+              { name: 'SUV / 4x4', desc: 'Spacious and rugged for adventures', image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image11-gtoVct7GyBYxjL939xouZSrrunpi3r.jpeg' },
+              { name: 'Sedan', desc: 'Fuel-efficient for city travel', image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image16-r5MBKZYUfwvGome3vU64KLthxNMKBD.jpeg' },
+              { name: 'Van', desc: 'Comfortable for large groups', image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image7-V3mhI5AxN7a0zQTCHO5NVpPCtOLhMU.jpeg' },
+              { name: 'Executive SUV', desc: 'Premium comfort for special occasions', image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%202-r1Dj77iGb3vNLOUN5CpgDFtAiVXTot.jpeg' },
+              { name: 'Compact Car', desc: 'Affordable and easy to maneuver', image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image5-hXIHuFYbODkXB9FT9QQQVPC2bWL0Ta.jpeg' },
             ].map((vehicle) => (
               <div key={vehicle.name} className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all hover:-translate-y-1 border border-blue-100 overflow-hidden group">
                 <div className="relative h-48 bg-gray-200 overflow-hidden">
@@ -153,7 +153,7 @@ export default function Home() {
           </div>
           <div className="relative h-96">
             <img
-              src="/images/car-suv.jpg"
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image4-pQgukUB90sia9D6yugX6tme7hpCyEi.jpeg"
               alt="SUV car"
               className="w-full h-full object-cover rounded-xl shadow-2xl"
             />
