@@ -1,9 +1,32 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+let supabaseInstance: SupabaseClient | null = null
 
-export const supabase = createClient(supabaseUrl, supabaseKey)
+function initSupabase(): SupabaseClient {
+  if (supabaseInstance) return supabaseInstance
+
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+
+  if (!url || !key) {
+    console.warn('[v0] Supabase URL or key not configured')
+  }
+
+  supabaseInstance = createClient(url, key)
+  return supabaseInstance
+}
+
+export const supabase = {
+  get auth() {
+    return initSupabase().auth
+  },
+  from(table: string) {
+    return initSupabase().from(table)
+  },
+  rpc(fn: string, params?: any) {
+    return initSupabase().rpc(fn, params)
+  },
+} as SupabaseClient
 
 export type Car = {
   id: string
