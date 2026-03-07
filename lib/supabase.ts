@@ -1,38 +1,33 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
-let supabaseClient: ReturnType<typeof createClient> | null = null
+let supabaseClient: SupabaseClient | null = null
 
-function getSupabaseClient() {
-  if (supabaseClient) {
-    return supabaseClient
+export function getSupabase(): SupabaseClient {
+  if (!supabaseClient) {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+    if (!supabaseUrl || !supabaseKey) {
+      throw new Error('Missing Supabase environment variables')
+    }
+
+    supabaseClient = createClient(supabaseUrl, supabaseKey)
   }
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-
-  if (!supabaseUrl) {
-    throw new Error('Missing NEXT_PUBLIC_SUPABASE_URL environment variable')
-  }
-
-  if (!supabaseKey) {
-    throw new Error('Missing NEXT_PUBLIC_SUPABASE_ANON_KEY environment variable')
-  }
-
-  supabaseClient = createClient(supabaseUrl, supabaseKey)
   return supabaseClient
 }
 
-export const supabase = {
-  auth: {
-    signUp: async (args: any) => getSupabaseClient().auth.signUp(args),
-    signIn: async (args: any) => getSupabaseClient().auth.signIn(args),
-    signOut: async () => getSupabaseClient().auth.signOut(),
-    getSession: async () => getSupabaseClient().auth.getSession(),
-    onAuthStateChange: (callback: any) => getSupabaseClient().auth.onAuthStateChange(callback),
+// Export a getter that will work with lazy initialization
+export const supabase = new Proxy({} as SupabaseClient, {
+  get(target, prop: string | symbol) {
+    const client = getSupabase()
+    const value = (client as any)[prop]
+    if (typeof value === 'function') {
+      return value.bind(client)
+    }
+    return value
   },
-  from: (table: string) => getSupabaseClient().from(table),
-  rpc: (fn: string, args?: any) => getSupabaseClient().rpc(fn, args),
-}
+})
 
 export type Car = {
   id: string
