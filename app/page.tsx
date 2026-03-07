@@ -193,13 +193,29 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
-              { title: 'Self-Drive', desc: 'Rent and drive yourself at your own pace', icon: '🚗' },
-              { title: 'Chauffeur Service', desc: 'Professional drivers available for comfort', icon: '🧑‍💼' },
-              { title: 'Airport Transfers', desc: 'Meet & greet at KMIII Airport', icon: '✈️' },
-              { title: 'Corporate Packages', desc: 'Long-term contracts available', icon: '🏢' },
+              { 
+                title: 'Self-Drive', 
+                desc: 'Rent and drive yourself at your own pace',
+                icon: <svg className="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              },
+              { 
+                title: 'Chauffeur Service', 
+                desc: 'Professional drivers available for comfort',
+                icon: <svg className="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+              },
+              { 
+                title: 'Airport Transfers', 
+                desc: 'Meet & greet at KMIII Airport',
+                icon: <svg className="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 19l9-7v11H3v-11l9 7z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 13l9-7 9 7" /></svg>
+              },
+              { 
+                title: 'Corporate Packages', 
+                desc: 'Long-term contracts available',
+                icon: <svg className="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5.5m0 0H9m0 0h-3.5m0 0H2m15.5 0a3.5 3.5 0 01-7 0m7 0a3.5 3.5 0 00-7 0m7 0v3.5m-7-3.5v3.5" /></svg>
+              },
             ].map((service) => (
               <div key={service.title} className="p-8 rounded-2xl bg-white border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1">
-                <div className="text-5xl mb-4">{service.icon}</div>
+                <div className="mb-4">{service.icon}</div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-3">{service.title}</h3>
                 <p className="text-gray-600 leading-relaxed">{service.desc}</p>
               </div>
