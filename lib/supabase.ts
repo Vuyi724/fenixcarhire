@@ -1,13 +1,38 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+let supabaseClient: ReturnType<typeof createClient> | null = null
 
-if (!supabaseUrl || !supabaseKey) {
-  throw new Error('Missing Supabase environment variables')
+function getSupabaseClient() {
+  if (supabaseClient) {
+    return supabaseClient
+  }
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  if (!supabaseUrl) {
+    throw new Error('Missing NEXT_PUBLIC_SUPABASE_URL environment variable')
+  }
+
+  if (!supabaseKey) {
+    throw new Error('Missing NEXT_PUBLIC_SUPABASE_ANON_KEY environment variable')
+  }
+
+  supabaseClient = createClient(supabaseUrl, supabaseKey)
+  return supabaseClient
 }
 
-export const supabase = createClient(supabaseUrl, supabaseKey)
+export const supabase = {
+  auth: {
+    signUp: async (args: any) => getSupabaseClient().auth.signUp(args),
+    signIn: async (args: any) => getSupabaseClient().auth.signIn(args),
+    signOut: async () => getSupabaseClient().auth.signOut(),
+    getSession: async () => getSupabaseClient().auth.getSession(),
+    onAuthStateChange: (callback: any) => getSupabaseClient().auth.onAuthStateChange(callback),
+  },
+  from: (table: string) => getSupabaseClient().from(table),
+  rpc: (fn: string, args?: any) => getSupabaseClient().rpc(fn, args),
+}
 
 export type Car = {
   id: string
