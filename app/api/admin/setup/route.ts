@@ -79,14 +79,18 @@ export async function POST(request: NextRequest) {
     const { email } = await request.json()
 
     // Execute migration
-    const { error: migrationError } = await supabase.rpc('exec', {
-      sql: migrationSQL
-    }).catch(() => {
-      // If rpc doesn't exist, just return success
-      return { error: null }
-    })
+    let migrationError = null
+    try {
+      const result = await supabase.rpc('exec', {
+        sql: migrationSQL
+      })
+      migrationError = result.error
+    } catch (error) {
+      // If rpc doesn't exist, continue without error
+      console.log('RPC exec not available, proceeding with setup')
+    }
 
-    if (migrationError && !migrationError.message.includes('already exists')) {
+    if (migrationError && !migrationError.message?.includes('already exists')) {
       console.error('Migration error:', migrationError)
     }
 
