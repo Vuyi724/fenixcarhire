@@ -1,33 +1,32 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
-let supabaseClient: SupabaseClient | null = null
+let supabaseInstance: SupabaseClient | null = null
 
-export function getSupabase(): SupabaseClient {
-  if (!supabaseClient) {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+function initSupabase(): SupabaseClient {
+  if (supabaseInstance) return supabaseInstance
 
-    if (!supabaseUrl || !supabaseKey) {
-      throw new Error('Missing Supabase environment variables')
-    }
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
 
-    supabaseClient = createClient(supabaseUrl, supabaseKey)
+  if (!url || !key) {
+    console.warn('[v0] Supabase URL or key not configured')
   }
 
-  return supabaseClient
+  supabaseInstance = createClient(url, key)
+  return supabaseInstance
 }
 
-// Export a getter that will work with lazy initialization
-export const supabase = new Proxy({} as SupabaseClient, {
-  get(target, prop: string | symbol) {
-    const client = getSupabase()
-    const value = (client as any)[prop]
-    if (typeof value === 'function') {
-      return value.bind(client)
-    }
-    return value
+export const supabase = {
+  get auth() {
+    return initSupabase().auth
   },
-})
+  from(table: string) {
+    return initSupabase().from(table)
+  },
+  rpc(fn: string, params?: any) {
+    return initSupabase().rpc(fn, params)
+  },
+} as SupabaseClient
 
 export type Car = {
   id: string
