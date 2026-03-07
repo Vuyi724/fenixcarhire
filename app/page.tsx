@@ -199,6 +199,16 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Setup Link - For Developers */}
+      <section className="py-8 px-6 bg-gray-100 border-t border-gray-300">
+        <div className="max-w-2xl mx-auto text-center">
+          <p className="text-gray-600 mb-3">First time setup needed?</p>
+          <Link href="/setup" className="text-blue-600 hover:text-blue-800 font-semibold underline">
+            Database Setup Instructions
+          </Link>
+        </div>
+      </section>
     </main>
   )
 }
