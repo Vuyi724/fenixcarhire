@@ -59,7 +59,7 @@ export default function Home() {
             <img
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image15-jgLAy9QGHOtRi04fW4CU8YS3oOwPmT.jpeg"
               alt="Premium car"
-              className="w-full h-full object-cover rounded-2xl shadow-2xl"
+              className="w-full h-full object-cover rounded-2xl shadow-2xl animate-float"
             />
           </div>
         </div>
@@ -72,7 +72,7 @@ export default function Home() {
             <img
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image14-2nvNFBW9aTPOM7FOC39RaA6UFHuGd6.jpeg"
               alt="Sedan car"
-              className="w-full h-full object-cover rounded-xl shadow-xl"
+              className="w-full h-full object-cover rounded-xl shadow-xl animate-slide-left"
             />
           </div>
           <div>
@@ -105,7 +105,7 @@ export default function Home() {
                   <img
                     src={vehicle.image}
                     alt={vehicle.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 animate-pulse-glow"
                   />
                 </div>
                 <div className="p-6">
@@ -155,7 +155,7 @@ export default function Home() {
             <img
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image4-pQgukUB90sia9D6yugX6tme7hpCyEi.jpeg"
               alt="SUV car"
-              className="w-full h-full object-cover rounded-xl shadow-2xl"
+              className="w-full h-full object-cover rounded-xl shadow-2xl animate-slide-right"
             />
           </div>
         </div>
