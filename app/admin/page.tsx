@@ -41,30 +41,30 @@ export default function AdminDashboard() {
         .select('*', { count: 'exact', head: true })
 
       // Get invoices count
-      const { count: invoices } = await supabase
+      const invoicesResult = await supabase
         .from('invoices')
         .select('*', { count: 'exact', head: true })
-        .catch(() => ({ count: 0 }))
+      const invoices = invoicesResult.count || 0
 
       // Get payments count
-      const { count: payments } = await supabase
+      const paymentsResult = await supabase
         .from('payments')
         .select('*', { count: 'exact', head: true })
-        .catch(() => ({ count: 0 }))
+      const payments = paymentsResult.count || 0
 
       // Get pending invoices
-      const { count: pending } = await supabase
+      const pendingResult = await supabase
         .from('invoices')
         .select('*', { count: 'exact', head: true })
         .eq('status', 'issued')
-        .catch(() => ({ count: 0 }))
+      const pending = pendingResult.count || 0
 
       // Get completed payments
-      const { count: completed } = await supabase
+      const completedResult = await supabase
         .from('payments')
         .select('*', { count: 'exact', head: true })
         .eq('status', 'completed')
-        .catch(() => ({ count: 0 }))
+      const completed = completedResult.count || 0
 
       setStats({
         totalCustomers: customers || 0,
