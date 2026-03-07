@@ -103,7 +103,7 @@ export default function Home() {
             Premium Car Rentals
           </h1>
           <p className="text-xl md:text-2xl text-gray-100 mb-8 leading-relaxed">
-            {carSlides[currentSlide].name} - {carSlides[currentSlide].desc}
+            {carSlides[currentSlide]?.name} - {carSlides[currentSlide]?.desc}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center flex-wrap">
             {user ? (
