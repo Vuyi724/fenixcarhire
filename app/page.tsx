@@ -36,7 +36,7 @@ export default function Home() {
             Fenix Car Hire
           </Link>
           <div className="flex gap-6 items-center">
-            <a href="https://facebook.com/fenixcarhire" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-2">
+            <a href="https://www.facebook.com/profile.php?id=100088818806884" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-2">
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
               Follow
             </a>
@@ -145,7 +145,7 @@ export default function Home() {
             <p className="text-gray-600 text-lg leading-relaxed mb-8">
               We offer well-maintained Toyota sedans, SUVs, vans, and double-cab pickups for business, family, events, or adventures. Our commitment to quality and customer service ensures a smooth rental experience every time.
             </p>
-            <a href="https://facebook.com/fenixcarhire" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-blue-600 font-bold text-lg hover:text-blue-700">
+            <a href="https://www.facebook.com/profile.php?id=100088818806884" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-blue-600 font-bold text-lg hover:text-blue-700">
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
               Follow us on Facebook
             </a>
@@ -193,10 +193,10 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
-              { title: 'Self-Drive', desc: 'Rent and drive yourself at your own pace', icon: '🔑' },
-              { title: 'Chauffeur Service', desc: 'Professional drivers available for comfort', icon: '👔' },
+              { title: 'Self-Drive', desc: 'Rent and drive yourself at your own pace', icon: '🚗' },
+              { title: 'Chauffeur Service', desc: 'Professional drivers available for comfort', icon: '🧑‍💼' },
               { title: 'Airport Transfers', desc: 'Meet & greet at KMIII Airport', icon: '✈️' },
-              { title: 'Corporate Packages', desc: 'Long-term contracts available', icon: '💼' },
+              { title: 'Corporate Packages', desc: 'Long-term contracts available', icon: '🏢' },
             ].map((service) => (
               <div key={service.title} className="p-8 rounded-2xl bg-white border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1">
                 <div className="text-5xl mb-4">{service.icon}</div>
@@ -220,7 +220,7 @@ export default function Home() {
               <Link href={user ? "/cars" : "/login"} className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-bold transition shadow-lg">
                 Start Your Journey
               </Link>
-              <a href="https://facebook.com/fenixcarhire" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 border border-white text-white px-8 py-4 rounded-lg font-bold hover:bg-white/10 transition">
+              <a href="https://www.facebook.com/profile.php?id=100088818806884" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 border border-white text-white px-8 py-4 rounded-lg font-bold hover:bg-white/10 transition">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                 Join Our Page
               </a>
@@ -245,7 +245,7 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-gradient-to-br from-blue-50 to-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1">
-              <div className="text-4xl mb-4">📞</div>
+              <div className="text-4xl mb-4">☎️</div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Phone</h3>
               <p className="text-gray-600 mb-4">(+268) 768 29797</p>
               <p className="text-gray-600 mb-4">(+268) 798 46935</p>
@@ -254,7 +254,7 @@ export default function Home() {
               </a>
             </div>
             <div className="bg-gradient-to-br from-blue-50 to-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1">
-              <div className="text-4xl mb-4">📧</div>
+              <div className="text-4xl mb-4">✉️</div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Email</h3>
               <p className="text-gray-600 mb-4">reception@fenix.co.sz</p>
               <a href="mailto:reception@fenix.co.sz" className="inline-block text-blue-600 font-bold hover:text-blue-700">
@@ -270,22 +270,22 @@ export default function Home() {
               </a>
             </div>
             <div className="bg-gradient-to-br from-blue-50 to-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1">
-              <div className="text-4xl mb-4">📍</div>
+              <div className="text-4xl mb-4">🗺️</div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Location</h3>
               <p className="text-gray-600">Sidwashini, Mbabane</p>
               <p className="text-gray-600">Eswatini</p>
             </div>
             <div className="bg-gradient-to-br from-blue-50 to-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1">
-              <div className="text-4xl mb-4">f</div>
+              <div className="text-4xl mb-4">👍</div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Facebook</h3>
               <p className="text-gray-600 mb-4">Fenix Car Hire</p>
-              <a href="https://facebook.com/fenixcarhire" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-blue-600 font-bold hover:text-blue-700">
+              <a href="https://www.facebook.com/profile.php?id=100088818806884" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-blue-600 font-bold hover:text-blue-700">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                 Visit Page →
               </a>
             </div>
             <div className="bg-gradient-to-br from-blue-50 to-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1">
-              <div className="text-4xl mb-4">🎯</div>
+              <div className="text-4xl mb-4">🕒</div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Hours</h3>
               <p className="text-gray-600">Monday - Sunday</p>
               <p className="text-gray-600">Available 24/7</p>
@@ -299,7 +299,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto text-center">
           <p className="mb-4">&copy; 2024 Fenix Car Hire. All rights reserved.</p>
           <div className="flex justify-center gap-6 mb-6">
-            <a href="https://facebook.com/fenixcarhire" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition">
+            <a href="https://www.facebook.com/profile.php?id=100088818806884" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition">
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
             </a>
           </div>
