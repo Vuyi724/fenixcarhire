@@ -22,8 +22,7 @@ export default function AdminLayout({
   ]
 
   return (
-    <ProtectedAdminRoute>
-      <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100">
         {/* Sidebar */}
         <div className="w-64 bg-gray-900 text-white shadow-lg">
           <div className="p-6 border-b border-gray-700">
@@ -70,6 +69,6 @@ export default function AdminLayout({
           </div>
         </div>
       </div>
-    </ProtectedAdminRoute>
+    </div>
   )
 }
