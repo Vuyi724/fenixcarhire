@@ -240,7 +240,6 @@ export default function CheckSheetsPage() {
                 placeholder="Any additional observations..."
                 rows={3}
               />
-              </div>
             </div>
 
             {/* Signature Section */}
