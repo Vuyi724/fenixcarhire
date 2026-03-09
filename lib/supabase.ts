@@ -1,9 +1,38 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+let supabaseInstance: SupabaseClient | null = null
 
-export const supabase = createClient(supabaseUrl, supabaseKey)
+function getSupabaseClient(): SupabaseClient {
+  if (supabaseInstance) {
+    return supabaseInstance
+  }
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder_key'
+
+  try {
+    supabaseInstance = createClient(supabaseUrl, supabaseKey)
+  } catch (error) {
+    console.error('[v0] Failed to initialize Supabase client:', error)
+  }
+
+  return supabaseInstance as SupabaseClient
+}
+
+export const supabase = {
+  get auth() {
+    return getSupabaseClient().auth
+  },
+  from(table: string) {
+    return getSupabaseClient().from(table)
+  },
+  rpc(fn: string, params?: any) {
+    return getSupabaseClient().rpc(fn, params)
+  },
+  channel(name: string) {
+    return getSupabaseClient().channel(name)
+  },
+}
 
 export type Car = {
   id: string
