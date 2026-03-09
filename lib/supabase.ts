@@ -7,15 +7,16 @@ function getSupabaseClient(): SupabaseClient {
     return supabaseInstance
   }
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder_key'
 
-  if (!supabaseUrl || !supabaseKey) {
-    throw new Error('Missing Supabase URL or key')
+  try {
+    supabaseInstance = createClient(supabaseUrl, supabaseKey)
+  } catch (error) {
+    console.error('[v0] Failed to initialize Supabase client:', error)
   }
 
-  supabaseInstance = createClient(supabaseUrl, supabaseKey)
-  return supabaseInstance
+  return supabaseInstance as SupabaseClient
 }
 
 export const supabase = {
