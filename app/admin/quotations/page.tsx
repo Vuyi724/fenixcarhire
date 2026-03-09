@@ -109,7 +109,7 @@ export default function QuotationsPage() {
     <div>
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Quotations</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Quotations & Invoices</h1>
           <p className="text-gray-600 mt-2">Create and manage customer quotations</p>
         </div>
         <button
@@ -120,14 +120,26 @@ export default function QuotationsPage() {
         </button>
       </div>
 
-      {/* Create Form */}
+      {/* Create Form - Quotation Invoice Format */}
       {showForm && (
-        <div className="bg-white rounded-lg shadow p-6 mb-6">
-          <h2 className="text-xl font-bold text-gray-900 mb-4">Create New Quotation</h2>
+        <div className="bg-white rounded-lg shadow p-8 mb-6 max-w-4xl">
           <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Header with Company Logo */}
+            <div className="flex justify-between items-center mb-8 pb-6 border-b-2">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Customer</label>
+                <h2 className="text-3xl font-bold text-gray-900">Fenix Car Hire</h2>
+                <p className="text-gray-600 text-sm">For All Your Rental Problems</p>
+              </div>
+              <div className="text-right text-sm text-gray-600">
+                <p>Contact: (+268) 768 29797</p>
+                <p>Email: reception@fenix.co.sz</p>
+              </div>
+            </div>
+
+            {/* Customer & Quote Info */}
+            <div className="grid grid-cols-2 gap-8 mb-8">
+              <div>
+                <label className="block text-sm font-bold text-gray-900 mb-2">Customer</label>
                 <select
                   required
                   value={formData.customer_id}
@@ -143,43 +155,109 @@ export default function QuotationsPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Vehicle Type</label>
-                <input
-                  type="text"
-                  required
-                  value={formData.vehicle_type}
-                  onChange={(e) => setFormData({ ...formData, vehicle_type: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="e.g., Toyota Corolla"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Rental Days</label>
-                <input
-                  type="number"
-                  required
-                  value={formData.rental_days}
-                  onChange={(e) => setFormData({ ...formData, rental_days: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Number of days"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Estimated Cost</label>
-                <input
-                  type="number"
-                  required
-                  step="0.01"
-                  value={formData.estimated_cost}
-                  onChange={(e) => setFormData({ ...formData, estimated_cost: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="0.00"
-                />
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-gray-900 mb-1">Date</label>
+                    <input type="date" className="w-full px-2 py-1 border border-gray-300 rounded text-sm" defaultValue={new Date().toISOString().split('T')[0]} />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-900 mb-1">Quotation #</label>
+                    <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm" placeholder="QUO-001" />
+                  </div>
+                </div>
               </div>
             </div>
+
+            {/* Line Items */}
+            <div className="mb-8">
+              <h3 className="text-sm font-bold text-gray-900 mb-4">Rental Items</h3>
+              <table className="w-full border-collapse mb-4">
+                <thead>
+                  <tr className="border-b-2 border-gray-300">
+                    <th className="text-left text-xs font-bold text-gray-900 py-2">Description</th>
+                    <th className="text-right text-xs font-bold text-gray-900 py-2 w-24">Rate/Day</th>
+                    <th className="text-right text-xs font-bold text-gray-900 py-2 w-20">Qty</th>
+                    <th className="text-right text-xs font-bold text-gray-900 py-2 w-20">Days</th>
+                    <th className="text-right text-xs font-bold text-gray-900 py-2 w-24">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b">
+                    <td className="py-3">
+                      <input type="text" placeholder="e.g., Fortuner" className="w-full px-2 py-1 border border-gray-300 rounded text-sm" />
+                    </td>
+                    <td className="text-right py-3">
+                      <input type="number" placeholder="400.00" step="0.01" className="w-full px-2 py-1 border border-gray-300 rounded text-sm text-right" />
+                    </td>
+                    <td className="text-right py-3">
+                      <input type="number" placeholder="1" className="w-full px-2 py-1 border border-gray-300 rounded text-sm text-right" defaultValue="1" />
+                    </td>
+                    <td className="text-right py-3">
+                      <input
+                        type="number"
+                        placeholder="7"
+                        value={formData.rental_days}
+                        onChange={(e) => setFormData({ ...formData, rental_days: e.target.value })}
+                        className="w-full px-2 py-1 border border-gray-300 rounded text-sm text-right"
+                      />
+                    </td>
+                    <td className="text-right py-3 pr-2">
+                      <input
+                        type="number"
+                        placeholder="2800.00"
+                        step="0.01"
+                        value={formData.estimated_cost}
+                        onChange={(e) => setFormData({ ...formData, estimated_cost: e.target.value })}
+                        className="w-full px-2 py-1 border border-gray-300 rounded text-sm text-right"
+                      />
+                    </td>
+                  </tr>
+                  <tr className="border-b">
+                    <td className="py-3">Contract Fee</td>
+                    <td className="text-right py-3">E 100.00</td>
+                    <td className="text-right py-3">1</td>
+                    <td className="text-right py-3">-</td>
+                    <td className="text-right py-3 pr-2">E 100.00</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3">Deposit (Refundable)</td>
+                    <td className="text-right py-3">E 5000.00</td>
+                    <td className="text-right py-3">1</td>
+                    <td className="text-right py-3">-</td>
+                    <td className="text-right py-3 pr-2">E 5000.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Totals */}
+            <div className="flex justify-end mb-8">
+              <div className="w-64">
+                <div className="flex justify-between py-2 border-t-2 border-gray-300">
+                  <span className="font-semibold text-gray-900">Subtotal:</span>
+                  <span className="text-gray-900">E [Auto]</span>
+                </div>
+                <div className="flex justify-between py-2">
+                  <span className="font-semibold text-gray-900">VAT (15%):</span>
+                  <span className="text-gray-900">E [Auto]</span>
+                </div>
+                <div className="flex justify-between py-2 border-t-2 border-gray-900 font-bold text-lg">
+                  <span>Total:</span>
+                  <span>E [Auto]</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Banking Details */}
+            <div className="mb-8 p-4 bg-gray-50 rounded">
+              <h4 className="font-bold text-gray-900 mb-2">Banking Details</h4>
+              <p className="text-sm text-gray-600">Account Name: Semperf Investments (Pty) Bank</p>
+              <p className="text-sm text-gray-600">Branch Code: 663164</p>
+            </div>
+
             <button
               type="submit"
-              className="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+              className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-semibold"
             >
               Create Quotation
             </button>
@@ -187,7 +265,7 @@ export default function QuotationsPage() {
         </div>
       )}
 
-      {/* Quotations Table */}
+      {/* Quotations List */}
       <div className="bg-white rounded-lg shadow overflow-hidden">
         {loading ? (
           <div className="text-center py-12">
@@ -204,7 +282,7 @@ export default function QuotationsPage() {
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Quote #</th>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Customer</th>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Vehicle</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Cost</th>
+                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Amount</th>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Status</th>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Valid Until</th>
               </tr>
@@ -215,7 +293,7 @@ export default function QuotationsPage() {
                   <td className="px-6 py-4 text-sm font-medium text-gray-900">{quotation.quote_number}</td>
                   <td className="px-6 py-4 text-sm text-gray-600">{quotation.users?.full_name || quotation.users?.email}</td>
                   <td className="px-6 py-4 text-sm text-gray-600">{quotation.vehicle_type}</td>
-                  <td className="px-6 py-4 text-sm text-gray-600">E$ {quotation.estimated_cost.toFixed(2)}</td>
+                  <td className="px-6 py-4 text-sm text-gray-600">E {quotation.estimated_cost.toFixed(2)}</td>
                   <td className="px-6 py-4 text-sm">
                     <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(quotation.status)}`}>
                       {quotation.status}

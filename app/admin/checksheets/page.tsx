@@ -24,10 +24,20 @@ export default function CheckSheetsPage() {
   const [formData, setFormData] = useState({
     booking_id: '',
     check_type: 'pre_rental',
-    car_condition: '',
-    fuel_level: '',
-    mileage: '',
-    damage_report: '',
+    vehicle_registration: '',
+    plate_number: '',
+    odometer_reading: '',
+    fuel_level: 'full',
+    tire_condition: '',
+    exterior_damage: '',
+    interior_condition: '',
+    windows_mirrors: '',
+    lights_working: '',
+    wipers_working: '',
+    ac_working: '',
+    checked_by: '',
+    signature: '',
+    damage_notes: '',
   })
   const [bookings, setBookings] = useState<any[]>([])
 
@@ -115,83 +125,151 @@ export default function CheckSheetsPage() {
         </button>
       </div>
 
-      {/* Create Form */}
+      {/* Create Form - Vehicle Check Sheet */}
       {showForm && (
-        <div className="bg-white rounded-lg shadow p-6 mb-6">
-          <h2 className="text-xl font-bold text-gray-900 mb-4">Create New Check Sheet</h2>
+        <div className="bg-white rounded-lg shadow p-8 mb-6 max-w-5xl">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">VEHICLE CHECK SHEET</h2>
+          <p className="text-center text-sm text-gray-600 mb-6">Fenix Car Hire - Pre & Post Rental Inspection</p>
+          
           <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Vehicle & Check Details */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 p-4 border border-gray-300">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Booking</label>
-                <select
-                  required
-                  value={formData.booking_id}
-                  onChange={(e) => setFormData({ ...formData, booking_id: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="">Select a booking</option>
-                  {bookings.map((booking) => (
-                    <option key={booking.id} value={booking.id}>
-                      {booking.vehicle_type} - {booking.users?.full_name}
-                    </option>
-                  ))}
-                </select>
+                <label className="block text-xs font-bold text-gray-900 mb-1">Vehicle Registration</label>
+                <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm" placeholder="ABE 123" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Check Type</label>
+                <label className="block text-xs font-bold text-gray-900 mb-1">Plate Number</label>
+                <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm" placeholder="BW 123" />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-gray-900 mb-1">Check Type</label>
                 <select
                   value={formData.check_type}
                   onChange={(e) => setFormData({ ...formData, check_type: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
                 >
                   <option value="pre_rental">Pre-Rental</option>
                   <option value="post_rental">Post-Rental</option>
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Fuel Level</label>
-                <input
-                  type="text"
-                  value={formData.fuel_level}
-                  onChange={(e) => setFormData({ ...formData, fuel_level: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="e.g., Full, 3/4, Half, 1/4"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Mileage</label>
+                <label className="block text-xs font-bold text-gray-900 mb-1">Odometer</label>
                 <input
                   type="number"
-                  value={formData.mileage}
-                  onChange={(e) => setFormData({ ...formData, mileage: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={formData.odometer_reading}
+                  onChange={(e) => setFormData({ ...formData, odometer_reading: e.target.value })}
+                  className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
                   placeholder="KM"
                 />
               </div>
-              <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Car Condition</label>
-                <textarea
-                  value={formData.car_condition}
-                  onChange={(e) => setFormData({ ...formData, car_condition: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Describe the overall condition..."
-                  rows={3}
-                />
+            </div>
+
+            {/* Condition Checks - Two Column Layout */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              {/* Left Column */}
+              <div className="border border-gray-300 p-4">
+                <h3 className="font-bold text-gray-900 mb-4">Pre-Rental Inspection</h3>
+                <div className="space-y-3">
+                  <div className="flex items-center">
+                    <label className="text-sm font-medium text-gray-700 mr-3 flex-1">Fuel Level</label>
+                    <div className="flex gap-2">
+                      {['Full', '3/4', 'Half', '1/4', 'Empty'].map((level) => (
+                        <label key={level} className="flex items-center">
+                          <input type="radio" name="fuel_pre" className="mr-1" />
+                          <span className="text-xs">{level}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-gray-700">Tire Condition</label>
+                    <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm mt-1" placeholder="Good/Fair/Poor" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-gray-700">Exterior Damage</label>
+                    <textarea className="w-full px-2 py-1 border border-gray-300 rounded text-sm mt-1" rows={2} placeholder="Describe any damage..." />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-gray-700">Windows & Mirrors</label>
+                    <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm mt-1" placeholder="OK/Damaged" />
+                  </div>
+                </div>
               </div>
-              <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Damage Report</label>
-                <textarea
-                  value={formData.damage_report}
-                  onChange={(e) => setFormData({ ...formData, damage_report: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Note any damages or issues..."
-                  rows={3}
-                />
+
+              {/* Right Column */}
+              <div className="border border-gray-300 p-4">
+                <h3 className="font-bold text-gray-900 mb-4">Vehicle Condition</h3>
+                <div className="space-y-3">
+                  <div>
+                    <label className="text-sm font-medium text-gray-700">Interior Condition</label>
+                    <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm mt-1" placeholder="Clean/Dirty/Excellent" />
+                  </div>
+                  <div className="flex items-center">
+                    <label className="text-sm font-medium text-gray-700 flex-1">Lights Working</label>
+                    <div className="flex gap-3">
+                      <label><input type="radio" name="lights" /> Yes</label>
+                      <label><input type="radio" name="lights" /> No</label>
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    <label className="text-sm font-medium text-gray-700 flex-1">Wipers Working</label>
+                    <div className="flex gap-3">
+                      <label><input type="radio" name="wipers" /> Yes</label>
+                      <label><input type="radio" name="wipers" /> No</label>
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    <label className="text-sm font-medium text-gray-700 flex-1">AC Working</label>
+                    <div className="flex gap-3">
+                      <label><input type="radio" name="ac" /> Yes</label>
+                      <label><input type="radio" name="ac" /> No</label>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+
+            {/* Additional Notes */}
+            <div className="mb-6">
+              <label className="block text-sm font-bold text-gray-900 mb-2">Additional Comments</label>
+              <textarea
+                value={formData.damage_notes}
+                onChange={(e) => setFormData({ ...formData, damage_notes: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                placeholder="Any additional observations..."
+                rows={3}
+              />
+              </div>
+            </div>
+
+            {/* Signature Section */}
+            <div className="grid grid-cols-2 gap-8 mb-6 p-4 border border-gray-300">
+              <div>
+                <label className="block text-xs font-bold text-gray-900 mb-2">Checked By (Name)</label>
+                <input
+                  type="text"
+                  value={formData.checked_by}
+                  onChange={(e) => setFormData({ ...formData, checked_by: e.target.value })}
+                  className="w-full px-2 py-1 border border-gray-300 rounded text-sm mb-3"
+                  placeholder="Inspector Name"
+                />
+                <label className="block text-xs font-bold text-gray-900 mb-1">Signature</label>
+                <div className="border-2 border-gray-400 h-16 flex items-center justify-center text-gray-400 text-sm">
+                  Signature / Initial
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-gray-900 mb-2">Date</label>
+                <input type="date" className="w-full px-2 py-1 border border-gray-300 rounded text-sm mb-3" defaultValue={new Date().toISOString().split('T')[0]} />
+                <label className="block text-xs font-bold text-gray-900 mb-1">Time</label>
+                <input type="time" className="w-full px-2 py-1 border border-gray-300 rounded text-sm" />
+              </div>
+            </div>
+
             <button
               type="submit"
-              className="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+              className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-semibold"
             >
               Create Check Sheet
             </button>
