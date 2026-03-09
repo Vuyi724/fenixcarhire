@@ -29,6 +29,9 @@ export const supabase = {
   rpc(fn: string, params?: any) {
     return getSupabaseClient().rpc(fn, params)
   },
+  channel(name: string) {
+    return getSupabaseClient().channel(name)
+  },
 }
 
 export type Car = {
