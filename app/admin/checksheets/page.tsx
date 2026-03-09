@@ -230,7 +230,7 @@ export default function CheckSheetsPage() {
               </div>
             </div>
 
-            {/* Additional Notes */}
+            {/* Additional Comments Section */}
             <div className="mb-6">
               <label className="block text-sm font-bold text-gray-900 mb-2">Additional Comments</label>
               <textarea
