@@ -78,19 +78,48 @@ export default function InvoicesPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
+      // Calculate total amount
+      const vehicleRental = (parseFloat(formData.rate_per_day) || 0) * (parseInt(formData.quantity) || 1) * (parseInt(formData.days) || 0)
+      const contractFee = parseFloat(formData.contract_fee) || 0
+      const excessCharge = parseFloat(formData.excess) || 0
+      const subtotal = vehicleRental + contractFee + excessCharge
+      const vat = subtotal * 0.15
+      const totalAmount = subtotal + vat
+
       const response = await fetch('/api/invoices', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           booking_id: formData.booking_id,
-          amount: parseFloat(formData.amount),
-          due_date: formData.due_date,
+          customer_name: formData.customer_name,
+          vehicle_type: formData.vehicle_type,
+          rental_days: parseInt(formData.days),
+          estimated_cost: totalAmount,
+          status: 'issued',
         }),
       })
 
       if (!response.ok) throw new Error('Failed to create invoice')
 
-      setFormData({ booking_id: '', amount: '', due_date: '' })
+      setFormData({
+        booking_id: '',
+        customer_name: '',
+        invoice_number: '',
+        purchase_order: '',
+        contact_person: '',
+        contact_number: '',
+        email: '',
+        invoice_date: new Date().toISOString().split('T')[0],
+        due_date: '',
+        vehicle_type: '',
+        rate_per_day: '',
+        quantity: '1',
+        kms_per_day: '',
+        days: '',
+        excess: '0',
+        contract_fee: '200',
+        excess_kms_details: '',
+      })
       setShowForm(false)
       fetchInvoices()
     } catch (error) {
