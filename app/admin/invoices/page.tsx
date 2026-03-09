@@ -127,6 +127,7 @@ export default function InvoicesPage() {
     }
   }
 
+  // Get status color for invoice display
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'paid':
