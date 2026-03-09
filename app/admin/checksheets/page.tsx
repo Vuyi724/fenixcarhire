@@ -85,11 +85,19 @@ export default function CheckSheetsPage() {
         body: JSON.stringify({
           booking_id: formData.booking_id,
           check_type: formData.check_type,
-          car_condition: formData.car_condition,
+          vehicle_registration: formData.vehicle_registration,
+          plate_number: formData.plate_number,
+          odometer_reading: formData.odometer_reading,
           fuel_level: formData.fuel_level,
-          mileage: formData.mileage ? parseInt(formData.mileage) : null,
-          damage_report: formData.damage_report,
-          checked_by: user?.id,
+          tire_condition: formData.tire_condition,
+          exterior_damage: formData.exterior_damage,
+          interior_condition: formData.interior_condition,
+          windows_mirrors: formData.windows_mirrors,
+          lights_working: formData.lights_working,
+          wipers_working: formData.wipers_working,
+          ac_working: formData.ac_working,
+          checked_by: formData.checked_by,
+          damage_notes: formData.damage_notes,
         }),
       })
 
@@ -98,10 +106,20 @@ export default function CheckSheetsPage() {
       setFormData({
         booking_id: '',
         check_type: 'pre_rental',
-        car_condition: '',
-        fuel_level: '',
-        mileage: '',
-        damage_report: '',
+        vehicle_registration: '',
+        plate_number: '',
+        odometer_reading: '',
+        fuel_level: 'full',
+        tire_condition: '',
+        exterior_damage: '',
+        interior_condition: '',
+        windows_mirrors: '',
+        lights_working: '',
+        wipers_working: '',
+        ac_working: '',
+        checked_by: '',
+        signature: '',
+        damage_notes: '',
       })
       setShowForm(false)
       fetchCheckSheets()
