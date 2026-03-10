@@ -306,17 +306,54 @@ export default function QuotationsPage() {
             <tbody>
               {quotations.map((quotation) => (
                 <tr key={quotation.id} className="border-b hover:bg-gray-50 transition">
-                  <td className="px-6 py-4 text-sm font-medium text-gray-900">{quotation.quote_number}</td>
-                  <td className="px-6 py-4 text-sm text-gray-600">{quotation.users?.full_name || quotation.users?.email}</td>
-                  <td className="px-6 py-4 text-sm text-gray-600">{quotation.vehicle_type}</td>
-                  <td className="px-6 py-4 text-sm text-gray-600">E {quotation.estimated_cost.toFixed(2)}</td>
                   <td className="px-6 py-4 text-sm">
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(quotation.status)}`}>
-                      {quotation.status}
-                    </span>
+                    <input
+                      type="text"
+                      defaultValue={quotation.quote_number}
+                      className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                      disabled
+                    />
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-600">
-                    {new Date(quotation.valid_until).toLocaleDateString()}
+                  <td className="px-6 py-4 text-sm">
+                    <input
+                      type="text"
+                      defaultValue={quotation.users?.full_name || quotation.users?.email || ''}
+                      className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                    />
+                  </td>
+                  <td className="px-6 py-4 text-sm">
+                    <input
+                      type="text"
+                      defaultValue={quotation.vehicle_type}
+                      className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                    />
+                  </td>
+                  <td className="px-6 py-4 text-sm">
+                    <input
+                      type="number"
+                      step="0.01"
+                      defaultValue={quotation.estimated_cost.toFixed(2)}
+                      className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                    />
+                  </td>
+                  <td className="px-6 py-4 text-sm">
+                    <select
+                      defaultValue={quotation.status}
+                      className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                    >
+                      <option value="draft">Draft</option>
+                      <option value="sent">Sent</option>
+                      <option value="accepted">Accepted</option>
+                      <option value="rejected">Rejected</option>
+                      <option value="expired">Expired</option>
+                    </select>
+                  </td>
+                  <td className="px-6 py-4 text-sm">
+                    <input
+                      type="date"
+                      defaultValue={new Date(quotation.valid_until).toISOString().split('T')[0]}
+                      className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                    />
                   </td>
                   <td className="px-6 py-4 text-sm">
                     <button

@@ -454,16 +454,48 @@ export default function InvoicesPage() {
             <tbody>
               {invoices.map((invoice) => (
                 <tr key={invoice.id} className="border-b hover:bg-gray-50 transition">
-                  <td className="px-6 py-4 text-sm font-medium text-gray-900">{invoice.invoice_number}</td>
-                  <td className="px-6 py-4 text-sm text-gray-600">{invoice.bookings?.vehicle_type}</td>
-                  <td className="px-6 py-4 text-sm text-gray-600">E$ {invoice.amount.toFixed(2)}</td>
                   <td className="px-6 py-4 text-sm">
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(invoice.status)}`}>
-                      {invoice.status}
-                    </span>
+                    <input
+                      type="text"
+                      defaultValue={invoice.invoice_number}
+                      className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                      disabled
+                    />
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-600">
-                    {new Date(invoice.issue_date).toLocaleDateString()}
+                  <td className="px-6 py-4 text-sm">
+                    <input
+                      type="text"
+                      defaultValue={invoice.bookings?.vehicle_type || ''}
+                      className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                      disabled
+                    />
+                  </td>
+                  <td className="px-6 py-4 text-sm">
+                    <input
+                      type="number"
+                      step="0.01"
+                      defaultValue={invoice.amount.toFixed(2)}
+                      className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                    />
+                  </td>
+                  <td className="px-6 py-4 text-sm">
+                    <select
+                      defaultValue={invoice.status}
+                      className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                    >
+                      <option value="draft">Draft</option>
+                      <option value="issued">Issued</option>
+                      <option value="paid">Paid</option>
+                      <option value="overdue">Overdue</option>
+                      <option value="cancelled">Cancelled</option>
+                    </select>
+                  </td>
+                  <td className="px-6 py-4 text-sm">
+                    <input
+                      type="date"
+                      defaultValue={new Date(invoice.issue_date).toISOString().split('T')[0]}
+                      className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                    />
                   </td>
                   <td className="px-6 py-4 text-sm">
                     <button
