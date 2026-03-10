@@ -358,12 +358,9 @@ export default function CheckSheetsPage() {
                   <td className="px-6 py-4 text-sm text-gray-600">{sheet.fuel_level || '-'}</td>
                   <td className="px-6 py-4 text-sm text-gray-600">{sheet.mileage ? `${sheet.mileage} KM` : '-'}</td>
                   <td className="px-6 py-4 text-sm text-gray-600">{sheet.users?.full_name || '-'}</td>
-                  <td className="px-6 py-4 text-sm text-gray-600">
-                    {checkSheet.users?.full_name || 'N/A'}
-                  </td>
                   <td className="px-6 py-4 text-sm">
                     <button
-                      onClick={() => handleEdit(checkSheet)}
+                      onClick={() => handleEdit(sheet)}
                       className="text-blue-600 hover:text-blue-800 font-medium"
                     >
                       Edit
