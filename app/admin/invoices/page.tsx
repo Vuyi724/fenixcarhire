@@ -19,6 +19,7 @@ export default function InvoicesPage() {
   const [invoices, setInvoices] = useState<Invoice[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
+  const [editingId, setEditingId] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     booking_id: '',
     customer_name: '',
@@ -75,6 +76,30 @@ export default function InvoicesPage() {
     }
   }
 
+  const handleEdit = (invoice: Invoice) => {
+    setEditingId(invoice.id)
+    setFormData({
+      booking_id: '',
+      customer_name: '',
+      invoice_number: invoice.invoice_number,
+      purchase_order: '',
+      contact_person: '',
+      contact_number: '',
+      email: '',
+      invoice_date: new Date().toISOString().split('T')[0],
+      due_date: invoice.due_date || '',
+      vehicle_type: '',
+      rate_per_day: '',
+      quantity: '1',
+      kms_per_day: '',
+      days: '',
+      excess: '0',
+      contract_fee: '200',
+      excess_kms_details: '',
+    })
+    setShowForm(true)
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
@@ -86,8 +111,8 @@ export default function InvoicesPage() {
       const vat = subtotal * 0.15
       const totalAmount = subtotal + vat
 
-      const response = await fetch('/api/invoices', {
-        method: 'POST',
+      const response = await fetch(`/api/invoices${editingId ? `/${editingId}` : ''}`, {
+        method: editingId ? 'PUT' : 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           booking_id: formData.booking_id,
@@ -99,7 +124,7 @@ export default function InvoicesPage() {
         }),
       })
 
-      if (!response.ok) throw new Error('Failed to create invoice')
+      if (!response.ok) throw new Error(`Failed to ${editingId ? 'update' : 'create'} invoice`)
 
       setFormData({
         booking_id: '',
@@ -120,6 +145,7 @@ export default function InvoicesPage() {
         contract_fee: '200',
         excess_kms_details: '',
       })
+      setEditingId(null)
       setShowForm(false)
       fetchInvoices()
     } catch (error) {
@@ -151,7 +177,10 @@ export default function InvoicesPage() {
           <p className="text-gray-600 mt-2">Manage customer invoices</p>
         </div>
         <button
-          onClick={() => setShowForm(!showForm)}
+          onClick={() => {
+            setShowForm(!showForm)
+            if (showForm) setEditingId(null)
+          }}
           className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
         >
           {showForm ? 'Cancel' : 'Create Invoice'}
@@ -434,7 +463,15 @@ export default function InvoicesPage() {
                     </span>
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-600">
-                    {new Date(invoice.due_date).toLocaleDateString()}
+                    {new Date(invoice.issue_date).toLocaleDateString()}
+                  </td>
+                  <td className="px-6 py-4 text-sm">
+                    <button
+                      onClick={() => handleEdit(invoice)}
+                      className="text-blue-600 hover:text-blue-800 font-medium"
+                    >
+                      Edit
+                    </button>
                   </td>
                 </tr>
               ))}

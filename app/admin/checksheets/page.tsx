@@ -21,6 +21,7 @@ export default function CheckSheetsPage() {
   const [checkSheets, setCheckSheets] = useState<CheckSheet[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
+  const [editingId, setEditingId] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     booking_id: '',
     check_type: 'pre_rental',
@@ -76,11 +77,34 @@ export default function CheckSheetsPage() {
     }
   }
 
+  const handleEdit = (checkSheet: CheckSheet) => {
+    setEditingId(checkSheet.id)
+    setFormData({
+      booking_id: checkSheet.bookings?.id || '',
+      check_type: checkSheet.check_type,
+      vehicle_registration: '',
+      plate_number: '',
+      odometer_reading: checkSheet.mileage?.toString() || '',
+      fuel_level: checkSheet.fuel_level,
+      tire_condition: '',
+      exterior_damage: '',
+      interior_condition: '',
+      windows_mirrors: '',
+      lights_working: '',
+      wipers_working: '',
+      ac_working: '',
+      checked_by: user?.user_metadata?.full_name || '',
+      signature: '',
+      damage_notes: checkSheet.damage_report || '',
+    })
+    setShowForm(true)
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const response = await fetch('/api/checksheets', {
-        method: 'POST',
+      const response = await fetch(`/api/checksheets${editingId ? `/${editingId}` : ''}`, {
+        method: editingId ? 'PUT' : 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           booking_id: formData.booking_id,
@@ -101,7 +125,7 @@ export default function CheckSheetsPage() {
         }),
       })
 
-      if (!response.ok) throw new Error('Failed to create check sheet')
+      if (!response.ok) throw new Error(`Failed to ${editingId ? 'update' : 'create'} check sheet`)
 
       setFormData({
         booking_id: '',
@@ -121,6 +145,7 @@ export default function CheckSheetsPage() {
         signature: '',
         damage_notes: '',
       })
+      setEditingId(null)
       setShowForm(false)
       fetchCheckSheets()
     } catch (error) {
@@ -136,7 +161,10 @@ export default function CheckSheetsPage() {
           <p className="text-gray-600 mt-2">Pre & post rental vehicle inspection records</p>
         </div>
         <button
-          onClick={() => setShowForm(!showForm)}
+          onClick={() => {
+            setShowForm(!showForm)
+            if (showForm) setEditingId(null)
+          }}
           className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
         >
           {showForm ? 'Cancel' : 'Create Check Sheet'}
@@ -331,7 +359,15 @@ export default function CheckSheetsPage() {
                   <td className="px-6 py-4 text-sm text-gray-600">{sheet.mileage ? `${sheet.mileage} KM` : '-'}</td>
                   <td className="px-6 py-4 text-sm text-gray-600">{sheet.users?.full_name || '-'}</td>
                   <td className="px-6 py-4 text-sm text-gray-600">
-                    {new Date(sheet.checked_date).toLocaleDateString()}
+                    {checkSheet.users?.full_name || 'N/A'}
+                  </td>
+                  <td className="px-6 py-4 text-sm">
+                    <button
+                      onClick={() => handleEdit(checkSheet)}
+                      className="text-blue-600 hover:text-blue-800 font-medium"
+                    >
+                      Edit
+                    </button>
                   </td>
                 </tr>
               ))}

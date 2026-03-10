@@ -18,6 +18,7 @@ export default function QuotationsPage() {
   const [quotations, setQuotations] = useState<Quotation[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
+  const [editingId, setEditingId] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     customer_id: '',
     vehicle_type: '',
@@ -61,11 +62,22 @@ export default function QuotationsPage() {
     }
   }
 
+  const handleEdit = (quotation: Quotation) => {
+    setEditingId(quotation.id)
+    setFormData({
+      customer_id: quotation.users?.id || '',
+      vehicle_type: quotation.vehicle_type,
+      rental_days: quotation.rental_days.toString(),
+      estimated_cost: quotation.estimated_cost.toString(),
+    })
+    setShowForm(true)
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const response = await fetch('/api/quotations', {
-        method: 'POST',
+      const response = await fetch(`/api/quotations${editingId ? `/${editingId}` : ''}`, {
+        method: editingId ? 'PUT' : 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           customer_id: formData.customer_id,
@@ -75,7 +87,7 @@ export default function QuotationsPage() {
         }),
       })
 
-      if (!response.ok) throw new Error('Failed to create quotation')
+      if (!response.ok) throw new Error(`Failed to ${editingId ? 'update' : 'create'} quotation`)
 
       setFormData({
         customer_id: '',
@@ -83,6 +95,7 @@ export default function QuotationsPage() {
         rental_days: '',
         estimated_cost: '',
       })
+      setEditingId(null)
       setShowForm(false)
       fetchQuotations()
     } catch (error) {
@@ -113,7 +126,10 @@ export default function QuotationsPage() {
           <p className="text-gray-600 mt-2">Create and manage customer quotations</p>
         </div>
         <button
-          onClick={() => setShowForm(!showForm)}
+          onClick={() => {
+            setShowForm(!showForm)
+            if (showForm) setEditingId(null)
+          }}
           className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
         >
           {showForm ? 'Cancel' : 'Create Quotation'}
@@ -301,6 +317,14 @@ export default function QuotationsPage() {
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-600">
                     {new Date(quotation.valid_until).toLocaleDateString()}
+                  </td>
+                  <td className="px-6 py-4 text-sm">
+                    <button
+                      onClick={() => handleEdit(quotation)}
+                      className="text-blue-600 hover:text-blue-800 font-medium"
+                    >
+                      Edit
+                    </button>
                   </td>
                 </tr>
               ))}
