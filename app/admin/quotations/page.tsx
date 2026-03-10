@@ -107,15 +107,31 @@ export default function QuotationsPage() {
     switch (status) {
       case 'accepted':
         return 'bg-green-100 text-green-800'
-      case 'pending':
+      case 'sent':
         return 'bg-blue-100 text-blue-800'
-      case 'rejected':
-        return 'bg-red-100 text-red-800'
-      case 'expired':
+      case 'draft':
         return 'bg-gray-100 text-gray-800'
+      case 'expired':
+        return 'bg-orange-100 text-orange-800'
       default:
         return 'bg-gray-100 text-gray-800'
     }
+  }
+
+  const handleClearAll = async () => {
+    if (window.confirm('Are you sure you want to delete all quotations? This action cannot be undone.')) {
+      try {
+        const response = await fetch('/api/quotations/clear-all', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+        })
+        if (!response.ok) throw new Error('Failed to clear quotations')
+        fetchQuotations()
+      } catch (error) {
+        console.error('Error clearing quotations:', error)
+      }
+    }
+  }
   }
 
   return (
@@ -125,15 +141,23 @@ export default function QuotationsPage() {
           <h1 className="text-3xl font-bold text-gray-900">Quotations & Invoices</h1>
           <p className="text-gray-600 mt-2">Create and manage customer quotations</p>
         </div>
-        <button
-          onClick={() => {
-            setShowForm(!showForm)
-            if (showForm) setEditingId(null)
-          }}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-        >
-          {showForm ? 'Cancel' : 'Create Quotation'}
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={handleClearAll}
+            className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
+          >
+            Clear All
+          </button>
+          <button
+            onClick={() => {
+              setShowForm(!showForm)
+              if (showForm) setEditingId(null)
+            }}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+          >
+            {showForm ? 'Cancel' : 'Create Quotation'}
+          </button>
+        </div>
       </div>
 
       {/* Create Form - Quotation Invoice Format */}

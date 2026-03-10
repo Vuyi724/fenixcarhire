@@ -169,6 +169,21 @@ export default function InvoicesPage() {
     }
   }
 
+  const handleClearAll = async () => {
+    if (window.confirm('Are you sure you want to delete all invoices? This action cannot be undone.')) {
+      try {
+        const response = await fetch('/api/invoices/clear-all', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+        })
+        if (!response.ok) throw new Error('Failed to clear invoices')
+        fetchInvoices()
+      } catch (error) {
+        console.error('Error clearing invoices:', error)
+      }
+    }
+  }
+
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
@@ -176,15 +191,23 @@ export default function InvoicesPage() {
           <h1 className="text-3xl font-bold text-gray-900">Invoices</h1>
           <p className="text-gray-600 mt-2">Manage customer invoices</p>
         </div>
-        <button
-          onClick={() => {
-            setShowForm(!showForm)
-            if (showForm) setEditingId(null)
-          }}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-        >
-          {showForm ? 'Cancel' : 'Create Invoice'}
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={handleClearAll}
+            className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
+          >
+            Clear All
+          </button>
+          <button
+            onClick={() => {
+              setShowForm(!showForm)
+              if (showForm) setEditingId(null)
+            }}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+          >
+            {showForm ? 'Cancel' : 'Create Invoice'}
+          </button>
+        </div>
       </div>
 
       {/* Create Form - Professional Tax Invoice */}
