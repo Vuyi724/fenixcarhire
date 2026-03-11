@@ -32,8 +32,8 @@ export default function Home() {
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <Link href="/" className="text-3xl font-bold text-gray-900">
-            Fenix Car Hire
+          <Link href="/" className="text-2xl font-bold text-gray-900">
+            <h1>Fenix Car Hire</h1>
           </Link>
           <div className="flex gap-6 items-center">
             <a href="https://www.facebook.com/profile.php?id=100088818806884" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-2">
@@ -311,15 +311,31 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-300 py-12 px-6">
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="mb-4">&copy; 2026 Fenix Car Hire. All rights reserved.</p>
-          <div className="flex justify-center gap-6 mb-6">
-            <a href="https://www.facebook.com/profile.php?id=100088818806884" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition">
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            </a>
+      <footer className="bg-gray-900 text-white py-12 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <div>
+              <h3 className="text-xl font-bold mb-4">Fenix Car Hire</h3>
+              <p className="text-gray-400">Your trusted partner for quality car rentals in Eswatini.</p>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4">Quick Links</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><Link href="/" className="hover:text-white transition">Home</Link></li>
+                <li><Link href="/cars" className="hover:text-white transition">Our Fleet</Link></li>
+                <li><Link href="/terms" className="hover:text-white transition">Terms & Conditions</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4">Contact</h4>
+              <p className="text-gray-400">Phone: (+268) 768 29797</p>
+              <p className="text-gray-400">Email: reception@fenix.co.sz</p>
+              <p className="text-gray-400">Location: Sidwashini, Mbabane</p>
+            </div>
           </div>
-          <p className="text-sm">Designed with passion for your rental experience</p>
+          <div className="border-t border-gray-700 pt-8 text-center">
+            <p className="text-gray-400">© 2025 Fenix Car Hire. All rights reserved.</p>
+          </div>
         </div>
       </footer>
     </main>

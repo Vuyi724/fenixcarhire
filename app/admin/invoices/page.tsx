@@ -1,8 +1,9 @@
 'use client'
 
+import { useAuth } from '@/app/auth-context'
+import { AdminProtected } from '@/app/components/admin-protected'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
-import { useAuth } from '@/app/auth-context'
 
 interface Invoice {
   id: string
@@ -19,6 +20,7 @@ export default function InvoicesPage() {
   const [invoices, setInvoices] = useState<Invoice[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
+  const [editingId, setEditingId] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     booking_id: '',
     customer_name: '',
@@ -75,6 +77,30 @@ export default function InvoicesPage() {
     }
   }
 
+  const handleEdit = (invoice: Invoice) => {
+    setEditingId(invoice.id)
+    setFormData({
+      booking_id: '',
+      customer_name: '',
+      invoice_number: invoice.invoice_number,
+      purchase_order: '',
+      contact_person: '',
+      contact_number: '',
+      email: '',
+      invoice_date: new Date().toISOString().split('T')[0],
+      due_date: invoice.due_date || '',
+      vehicle_type: '',
+      rate_per_day: '',
+      quantity: '1',
+      kms_per_day: '',
+      days: '',
+      excess: '0',
+      contract_fee: '200',
+      excess_kms_details: '',
+    })
+    setShowForm(true)
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
@@ -86,8 +112,8 @@ export default function InvoicesPage() {
       const vat = subtotal * 0.15
       const totalAmount = subtotal + vat
 
-      const response = await fetch('/api/invoices', {
-        method: 'POST',
+      const response = await fetch(`/api/invoices${editingId ? `/${editingId}` : ''}`, {
+        method: editingId ? 'PUT' : 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           booking_id: formData.booking_id,
@@ -99,7 +125,7 @@ export default function InvoicesPage() {
         }),
       })
 
-      if (!response.ok) throw new Error('Failed to create invoice')
+      if (!response.ok) throw new Error(`Failed to ${editingId ? 'update' : 'create'} invoice`)
 
       setFormData({
         booking_id: '',
@@ -113,13 +139,14 @@ export default function InvoicesPage() {
         due_date: '',
         vehicle_type: '',
         rate_per_day: '',
-        quantity: '1',
+        quantity: '',
         kms_per_day: '',
         days: '',
-        excess: '0',
-        contract_fee: '200',
+        excess: '',
+        contract_fee: '',
         excess_kms_details: '',
       })
+      setEditingId(null)
       setShowForm(false)
       fetchInvoices()
     } catch (error) {
@@ -143,19 +170,46 @@ export default function InvoicesPage() {
     }
   }
 
+  const handleClearAll = async () => {
+    if (window.confirm('Are you sure you want to delete all invoices? This action cannot be undone.')) {
+      try {
+        const response = await fetch('/api/invoices/clear-all', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+        })
+        if (!response.ok) throw new Error('Failed to clear invoices')
+        fetchInvoices()
+      } catch (error) {
+        console.error('Error clearing invoices:', error)
+      }
+    }
+  }
+
   return (
-    <div>
-      <div className="flex justify-between items-center mb-6">
+    <AdminProtected>
+      <div>
+        <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Invoices</h1>
           <p className="text-gray-600 mt-2">Manage customer invoices</p>
         </div>
-        <button
-          onClick={() => setShowForm(!showForm)}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-        >
-          {showForm ? 'Cancel' : 'Create Invoice'}
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={handleClearAll}
+            className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
+          >
+            Clear All
+          </button>
+          <button
+            onClick={() => {
+              setShowForm(!showForm)
+              if (showForm) setEditingId(null)
+            }}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+          >
+            {showForm ? 'Cancel' : 'Create Invoice'}
+          </button>
+        </div>
       </div>
 
       {/* Create Form - Professional Tax Invoice */}
@@ -289,7 +343,7 @@ export default function InvoicesPage() {
                       value={formData.vehicle_type}
                       onChange={(e) => setFormData({ ...formData, vehicle_type: e.target.value })}
                       className="w-full border-0 focus:outline-none text-sm"
-                      placeholder="e.g., Siata"
+                      placeholder="Description"
                     />
                   </td>
                   <td className="px-3 py-2 text-center">
@@ -299,7 +353,7 @@ export default function InvoicesPage() {
                       value={formData.rate_per_day}
                       onChange={(e) => setFormData({ ...formData, rate_per_day: e.target.value })}
                       className="w-full border-0 text-center focus:outline-none text-sm"
-                      placeholder="1800.00"
+                      placeholder="0.00"
                     />
                   </td>
                   <td className="px-3 py-2 text-center">
@@ -308,7 +362,7 @@ export default function InvoicesPage() {
                       value={formData.quantity}
                       onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
                       className="w-full border-0 text-center focus:outline-none text-sm"
-                      defaultValue="1"
+                      placeholder="0"
                     />
                   </td>
                   <td className="px-3 py-2 text-center">
@@ -317,7 +371,7 @@ export default function InvoicesPage() {
                       value={formData.kms_per_day}
                       onChange={(e) => setFormData({ ...formData, kms_per_day: e.target.value })}
                       className="w-full border-0 text-center focus:outline-none text-sm"
-                      placeholder="300"
+                      placeholder="0"
                     />
                   </td>
                   <td className="px-3 py-2 text-center">
@@ -326,7 +380,7 @@ export default function InvoicesPage() {
                       value={formData.days}
                       onChange={(e) => setFormData({ ...formData, days: e.target.value })}
                       className="w-full border-0 text-center focus:outline-none text-sm"
-                      placeholder="7"
+                      placeholder="0"
                     />
                   </td>
                   <td className="px-3 py-2 text-center">
@@ -336,7 +390,7 @@ export default function InvoicesPage() {
                       value={formData.excess}
                       onChange={(e) => setFormData({ ...formData, excess: e.target.value })}
                       className="w-full border-0 text-center focus:outline-none text-sm"
-                      placeholder="0"
+                      placeholder="0.00"
                     />
                   </td>
                   <td className="px-3 py-2 text-right">E 0.00</td>
@@ -344,7 +398,7 @@ export default function InvoicesPage() {
                 <tr className="border-b border-gray-400">
                   <td className="px-3 py-2">2. Contract fee</td>
                   <td colSpan={5} className="px-3 py-2"></td>
-                  <td className="px-3 py-2 text-right">E 200.00</td>
+                  <td className="px-3 py-2 text-right">E 0.00</td>
                 </tr>
                 <tr>
                   <td className="px-3 py-2">3. Excess KMs</td>
@@ -354,7 +408,7 @@ export default function InvoicesPage() {
                       value={formData.excess_kms_details}
                       onChange={(e) => setFormData({ ...formData, excess_kms_details: e.target.value })}
                       className="w-full border-0 focus:outline-none text-sm text-gray-600"
-                      placeholder="e.g., MR187GP - 117KM"
+                      placeholder="Details"
                     />
                   </td>
                   <td className="px-3 py-2 text-right">E 0.00</td>
@@ -376,15 +430,15 @@ export default function InvoicesPage() {
                   <tbody>
                     <tr className="border-t-2 border-gray-400">
                       <td className="px-3 py-2 font-semibold text-gray-900">Subtotal</td>
-                      <td className="px-3 py-2 text-right text-gray-900">E 6 781.00</td>
+                      <td className="px-3 py-2 text-right text-gray-900">E 0.00</td>
                     </tr>
                     <tr>
                       <td className="px-3 py-2 font-semibold text-gray-900">VAT - 15%</td>
-                      <td className="px-3 py-2 text-right text-gray-900">E 1 017.15</td>
+                      <td className="px-3 py-2 text-right text-gray-900">E 0.00</td>
                     </tr>
                     <tr className="border-t-2 border-gray-900 font-bold text-lg">
                       <td className="px-3 py-2 text-gray-900">Total</td>
-                      <td className="px-3 py-2 text-right text-gray-900">E 7 798.15</td>
+                      <td className="px-3 py-2 text-right text-gray-900">E 0.00</td>
                     </tr>
                   </tbody>
                 </table>
@@ -425,16 +479,56 @@ export default function InvoicesPage() {
             <tbody>
               {invoices.map((invoice) => (
                 <tr key={invoice.id} className="border-b hover:bg-gray-50 transition">
-                  <td className="px-6 py-4 text-sm font-medium text-gray-900">{invoice.invoice_number}</td>
-                  <td className="px-6 py-4 text-sm text-gray-600">{invoice.bookings?.vehicle_type}</td>
-                  <td className="px-6 py-4 text-sm text-gray-600">E$ {invoice.amount.toFixed(2)}</td>
                   <td className="px-6 py-4 text-sm">
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(invoice.status)}`}>
-                      {invoice.status}
-                    </span>
+                    <input
+                      type="text"
+                      defaultValue={invoice.invoice_number}
+                      className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                      disabled
+                    />
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-600">
-                    {new Date(invoice.due_date).toLocaleDateString()}
+                  <td className="px-6 py-4 text-sm">
+                    <input
+                      type="text"
+                      defaultValue={invoice.bookings?.vehicle_type || ''}
+                      className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                      disabled
+                    />
+                  </td>
+                  <td className="px-6 py-4 text-sm">
+                    <input
+                      type="number"
+                      step="0.01"
+                      defaultValue={invoice.amount.toFixed(2)}
+                      className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                    />
+                  </td>
+                  <td className="px-6 py-4 text-sm">
+                    <select
+                      defaultValue={invoice.status}
+                      className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                    >
+                      <option value="draft">Draft</option>
+                      <option value="issued">Issued</option>
+                      <option value="paid">Paid</option>
+                      <option value="overdue">Overdue</option>
+                      <option value="cancelled">Cancelled</option>
+                    </select>
+                  </td>
+                  <td className="px-6 py-4 text-sm">
+                    <input
+                      type="date"
+                      defaultValue={new Date(invoice.issue_date).toISOString().split('T')[0]}
+                      className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                    />
+                  </td>
+                  <td className="px-6 py-4 text-sm">
+                    <button
+                      onClick={() => handleEdit(invoice)}
+                      className="text-blue-600 hover:text-blue-800 font-medium"
+                    >
+                      Edit
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -442,6 +536,7 @@ export default function InvoicesPage() {
           </table>
         )}
       </div>
-    </div>
+      </div>
+    </AdminProtected>
   )
 }

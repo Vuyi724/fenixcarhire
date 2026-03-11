@@ -19,10 +19,14 @@ export default function LoginPage() {
     setLoading(true)
 
     try {
+      console.log('[v0] Attempting to sign in with email:', email)
       await signIn(email, password)
+      console.log('[v0] Sign in successful')
       router.push('/cars')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to sign in')
+      const errorMessage = err instanceof Error ? err.message : 'Failed to sign in'
+      console.log('[v0] Sign in error:', errorMessage)
+      setError(errorMessage)
     } finally {
       setLoading(false)
     }

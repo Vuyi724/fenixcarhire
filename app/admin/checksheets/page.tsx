@@ -1,8 +1,9 @@
 'use client'
 
+import { AdminProtected } from '@/app/components/admin-protected'
+import { useAuth } from '@/app/auth-context'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
-import { useAuth } from '@/app/auth-context'
 
 interface CheckSheet {
   id: string
@@ -21,6 +22,7 @@ export default function CheckSheetsPage() {
   const [checkSheets, setCheckSheets] = useState<CheckSheet[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
+  const [editingId, setEditingId] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     booking_id: '',
     check_type: 'pre_rental',
@@ -76,11 +78,34 @@ export default function CheckSheetsPage() {
     }
   }
 
+  const handleEdit = (checkSheet: CheckSheet) => {
+    setEditingId(checkSheet.id)
+    setFormData({
+      booking_id: checkSheet.bookings?.id || '',
+      check_type: checkSheet.check_type,
+      vehicle_registration: '',
+      plate_number: '',
+      odometer_reading: checkSheet.mileage?.toString() || '',
+      fuel_level: checkSheet.fuel_level,
+      tire_condition: '',
+      exterior_damage: '',
+      interior_condition: '',
+      windows_mirrors: '',
+      lights_working: '',
+      wipers_working: '',
+      ac_working: '',
+      checked_by: user?.user_metadata?.full_name || '',
+      signature: '',
+      damage_notes: checkSheet.damage_report || '',
+    })
+    setShowForm(true)
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const response = await fetch('/api/checksheets', {
-        method: 'POST',
+      const response = await fetch(`/api/checksheets${editingId ? `/${editingId}` : ''}`, {
+        method: editingId ? 'PUT' : 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           booking_id: formData.booking_id,
@@ -101,7 +126,7 @@ export default function CheckSheetsPage() {
         }),
       })
 
-      if (!response.ok) throw new Error('Failed to create check sheet')
+      if (!response.ok) throw new Error(`Failed to ${editingId ? 'update' : 'create'} check sheet`)
 
       setFormData({
         booking_id: '',
@@ -121,6 +146,7 @@ export default function CheckSheetsPage() {
         signature: '',
         damage_notes: '',
       })
+      setEditingId(null)
       setShowForm(false)
       fetchCheckSheets()
     } catch (error) {
@@ -129,14 +155,18 @@ export default function CheckSheetsPage() {
   }
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-6">
+    <AdminProtected>
+      <div>
+        <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Check Sheets</h1>
           <p className="text-gray-600 mt-2">Pre & post rental vehicle inspection records</p>
         </div>
         <button
-          onClick={() => setShowForm(!showForm)}
+          onClick={() => {
+            setShowForm(!showForm)
+            if (showForm) setEditingId(null)
+          }}
           className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
         >
           {showForm ? 'Cancel' : 'Create Check Sheet'}
@@ -183,18 +213,19 @@ export default function CheckSheetsPage() {
               </div>
             </div>
 
-            {/* Condition Checks - Two Column Layout */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              {/* Left Column */}
-              <div className="border border-gray-300 p-4">
-                <h3 className="font-bold text-gray-900 mb-4">Pre-Rental Inspection</h3>
+            {/* RENTED OUT Section */}
+            <div className="mb-8 border-2 border-gray-400 p-6 bg-blue-50">
+              <h3 className="text-lg font-bold text-gray-900 mb-4 pb-2 border-b-2 border-blue-400">RENTED OUT</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Left Column */}
                 <div className="space-y-3">
                   <div className="flex items-center">
                     <label className="text-sm font-medium text-gray-700 mr-3 flex-1">Fuel Level</label>
                     <div className="flex gap-2">
                       {['Full', '3/4', 'Half', '1/4', 'Empty'].map((level) => (
                         <label key={level} className="flex items-center">
-                          <input type="radio" name="fuel_pre" className="mr-1" />
+                          <input type="radio" name="fuel_out" className="mr-1" />
                           <span className="text-xs">{level}</span>
                         </label>
                       ))}
@@ -213,11 +244,8 @@ export default function CheckSheetsPage() {
                     <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm mt-1" placeholder="OK/Damaged" />
                   </div>
                 </div>
-              </div>
 
-              {/* Right Column */}
-              <div className="border border-gray-300 p-4">
-                <h3 className="font-bold text-gray-900 mb-4">Vehicle Condition</h3>
+                {/* Right Column */}
                 <div className="space-y-3">
                   <div>
                     <label className="text-sm font-medium text-gray-700">Interior Condition</label>
@@ -226,22 +254,85 @@ export default function CheckSheetsPage() {
                   <div className="flex items-center">
                     <label className="text-sm font-medium text-gray-700 flex-1">Lights Working</label>
                     <div className="flex gap-3">
-                      <label><input type="radio" name="lights" /> Yes</label>
-                      <label><input type="radio" name="lights" /> No</label>
+                      <label><input type="radio" name="lights_out" /> Yes</label>
+                      <label><input type="radio" name="lights_out" /> No</label>
                     </div>
                   </div>
                   <div className="flex items-center">
                     <label className="text-sm font-medium text-gray-700 flex-1">Wipers Working</label>
                     <div className="flex gap-3">
-                      <label><input type="radio" name="wipers" /> Yes</label>
-                      <label><input type="radio" name="wipers" /> No</label>
+                      <label><input type="radio" name="wipers_out" /> Yes</label>
+                      <label><input type="radio" name="wipers_out" /> No</label>
                     </div>
                   </div>
                   <div className="flex items-center">
                     <label className="text-sm font-medium text-gray-700 flex-1">AC Working</label>
                     <div className="flex gap-3">
-                      <label><input type="radio" name="ac" /> Yes</label>
-                      <label><input type="radio" name="ac" /> No</label>
+                      <label><input type="radio" name="ac_out" /> Yes</label>
+                      <label><input type="radio" name="ac_out" /> No</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* BROUGHT IN Section */}
+            <div className="mb-8 border-2 border-gray-400 p-6 bg-green-50">
+              <h3 className="text-lg font-bold text-gray-900 mb-4 pb-2 border-b-2 border-green-400">BROUGHT IN</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Left Column */}
+                <div className="space-y-3">
+                  <div className="flex items-center">
+                    <label className="text-sm font-medium text-gray-700 mr-3 flex-1">Fuel Level</label>
+                    <div className="flex gap-2">
+                      {['Full', '3/4', 'Half', '1/4', 'Empty'].map((level) => (
+                        <label key={level} className="flex items-center">
+                          <input type="radio" name="fuel_in" className="mr-1" />
+                          <span className="text-xs">{level}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-gray-700">Tire Condition</label>
+                    <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm mt-1" placeholder="Good/Fair/Poor" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-gray-700">Exterior Damage</label>
+                    <textarea className="w-full px-2 py-1 border border-gray-300 rounded text-sm mt-1" rows={2} placeholder="Describe any damage..." />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-gray-700">Windows & Mirrors</label>
+                    <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm mt-1" placeholder="OK/Damaged" />
+                  </div>
+                </div>
+
+                {/* Right Column */}
+                <div className="space-y-3">
+                  <div>
+                    <label className="text-sm font-medium text-gray-700">Interior Condition</label>
+                    <input type="text" className="w-full px-2 py-1 border border-gray-300 rounded text-sm mt-1" placeholder="Clean/Dirty/Excellent" />
+                  </div>
+                  <div className="flex items-center">
+                    <label className="text-sm font-medium text-gray-700 flex-1">Lights Working</label>
+                    <div className="flex gap-3">
+                      <label><input type="radio" name="lights_in" /> Yes</label>
+                      <label><input type="radio" name="lights_in" /> No</label>
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    <label className="text-sm font-medium text-gray-700 flex-1">Wipers Working</label>
+                    <div className="flex gap-3">
+                      <label><input type="radio" name="wipers_in" /> Yes</label>
+                      <label><input type="radio" name="wipers_in" /> No</label>
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    <label className="text-sm font-medium text-gray-700 flex-1">AC Working</label>
+                    <div className="flex gap-3">
+                      <label><input type="radio" name="ac_in" /> Yes</label>
+                      <label><input type="radio" name="ac_in" /> No</label>
                     </div>
                   </div>
                 </div>
@@ -263,18 +354,18 @@ export default function CheckSheetsPage() {
             {/* Signature Section */}
             <div className="grid grid-cols-2 gap-8 mb-6 p-4 border border-gray-300">
               <div>
-                <label className="block text-xs font-bold text-gray-900 mb-2">Checked By (Name)</label>
+                <label className="block text-xs font-bold text-gray-900 mb-2">Signature</label>
+                <div className="border-2 border-gray-400 h-16 flex items-center justify-center text-gray-400 text-sm mb-3">
+                  Signature / Initial
+                </div>
+                <label className="block text-xs font-bold text-gray-900 mb-1">Print Name</label>
                 <input
                   type="text"
                   value={formData.checked_by}
                   onChange={(e) => setFormData({ ...formData, checked_by: e.target.value })}
-                  className="w-full px-2 py-1 border border-gray-300 rounded text-sm mb-3"
+                  className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
                   placeholder="Inspector Name"
                 />
-                <label className="block text-xs font-bold text-gray-900 mb-1">Signature</label>
-                <div className="border-2 border-gray-400 h-16 flex items-center justify-center text-gray-400 text-sm">
-                  Signature / Initial
-                </div>
               </div>
               <div>
                 <label className="block text-xs font-bold text-gray-900 mb-2">Date</label>
@@ -330,8 +421,13 @@ export default function CheckSheetsPage() {
                   <td className="px-6 py-4 text-sm text-gray-600">{sheet.fuel_level || '-'}</td>
                   <td className="px-6 py-4 text-sm text-gray-600">{sheet.mileage ? `${sheet.mileage} KM` : '-'}</td>
                   <td className="px-6 py-4 text-sm text-gray-600">{sheet.users?.full_name || '-'}</td>
-                  <td className="px-6 py-4 text-sm text-gray-600">
-                    {new Date(sheet.checked_date).toLocaleDateString()}
+                  <td className="px-6 py-4 text-sm">
+                    <button
+                      onClick={() => handleEdit(sheet)}
+                      className="text-blue-600 hover:text-blue-800 font-medium"
+                    >
+                      Edit
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -339,6 +435,7 @@ export default function CheckSheetsPage() {
           </table>
         )}
       </div>
-    </div>
+      </div>
+    </AdminProtected>
   )
 }

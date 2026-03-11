@@ -146,16 +146,16 @@ export default function BookingPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-gray-100">
       {/* Navigation */}
-      <nav className="bg-white shadow-sm">
+      <nav className="bg-white/80 backdrop-blur-md shadow-sm border-b border-blue-100">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold text-[#1a2e5e]">
+          <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
             Fenix Car Hire
           </Link>
           <div className="flex gap-4 items-center">
-            <Link href="/cars" className="text-[#ff7f00] font-semibold hover:underline">
-              Back to Cars
+            <Link href="/cars" className="text-blue-600 font-semibold hover:text-blue-800 transition">
+              ← Back to Cars
             </Link>
           </div>
         </div>
@@ -165,15 +165,15 @@ export default function BookingPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Car Details */}
           <div className="md:col-span-1">
-            <div className="bg-white rounded-lg shadow-md overflow-hidden sticky top-6">
+            <div className="bg-white rounded-xl shadow-md overflow-hidden sticky top-6 border-t-4 border-blue-600">
               <img
                 src={car.image_url}
                 alt={`${car.brand} ${car.model}`}
                 className="w-full h-48 object-cover"
               />
               <div className="p-6">
-                <h2 className="text-2xl font-bold text-[#1a2e5e] mb-4">
-                  {car.brand} {car.model}
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                  {car.brand} <span className="text-blue-600">{car.model}</span>
                 </h2>
                 <div className="space-y-2 text-gray-600 mb-6 text-sm">
                   <p>Year: {car.year}</p>
@@ -183,9 +183,9 @@ export default function BookingPage() {
                   <p>License: {car.license_plate}</p>
                 </div>
                 
-                <div className="bg-gray-50 p-4 rounded-lg">
+                <div className="bg-gradient-to-br from-blue-50 to-gray-50 p-4 rounded-lg border border-blue-100">
                   <p className="text-gray-600 text-sm mb-2">Daily Rate</p>
-                  <p className="text-3xl font-bold text-[#ff7f00] mb-4">
+                  <p className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent mb-4">
                     E${car.daily_rate}
                   </p>
                   
@@ -193,7 +193,7 @@ export default function BookingPage() {
                     <>
                       <div className="border-t border-gray-200 pt-4">
                         <p className="text-gray-600 text-sm">Duration: {calculateDays()} days</p>
-                        <p className="text-2xl font-bold text-[#1a2e5e] mt-2">
+                        <p className="text-2xl font-bold text-gray-900 mt-2">
                           Total: E${calculateTotal()}
                         </p>
                       </div>
@@ -206,10 +206,10 @@ export default function BookingPage() {
 
           {/* Booking Form */}
           <div className="md:col-span-2">
-            <div className="bg-white rounded-lg shadow-md p-8">
+            <div className="bg-white rounded-xl shadow-md p-8 border-t-4 border-gray-400">
               {paymentStep === 'details' && (
                 <>
-                  <h2 className="text-2xl font-bold text-[#1a2e5e] mb-6">Booking Details</h2>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-6">Booking Details</h2>
                   
                   <form className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -222,7 +222,7 @@ export default function BookingPage() {
                           name="passengerName"
                           value={formData.passengerName}
                           onChange={handleInputChange}
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ff7f00] focus:border-transparent outline-none"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                           required
                         />
                       </div>
@@ -236,7 +236,7 @@ export default function BookingPage() {
                           name="passengerEmail"
                           value={formData.passengerEmail}
                           onChange={handleInputChange}
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ff7f00] focus:border-transparent outline-none"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                           required
                         />
                       </div>
@@ -250,14 +250,14 @@ export default function BookingPage() {
                           name="passengerPhone"
                           value={formData.passengerPhone}
                           onChange={handleInputChange}
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ff7f00] focus:border-transparent outline-none"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                           required
                         />
                       </div>
                     </div>
 
                     <div className="border-t pt-6">
-                      <h3 className="text-lg font-semibold text-[#1a2e5e] mb-4">Rental Details</h3>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-4">Rental Details</h3>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div>
@@ -269,7 +269,7 @@ export default function BookingPage() {
                             name="pickupDate"
                             value={formData.pickupDate}
                             onChange={handleInputChange}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ff7f00] focus:border-transparent outline-none"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                             required
                           />
                         </div>
@@ -283,7 +283,7 @@ export default function BookingPage() {
                             name="returnDate"
                             value={formData.returnDate}
                             onChange={handleInputChange}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ff7f00] focus:border-transparent outline-none"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                             required
                           />
                         </div>
@@ -300,7 +300,7 @@ export default function BookingPage() {
                             value={formData.pickupLocation}
                             onChange={handleInputChange}
                             placeholder="e.g., Airport, Hotel"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ff7f00] focus:border-transparent outline-none"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                             required
                           />
                         </div>
@@ -315,7 +315,7 @@ export default function BookingPage() {
                             value={formData.returnLocation}
                             onChange={handleInputChange}
                             placeholder="e.g., Airport, Hotel"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ff7f00] focus:border-transparent outline-none"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                             required
                           />
                         </div>
@@ -325,7 +325,7 @@ export default function BookingPage() {
                     <button
                       type="button"
                       onClick={handlePaymentClick}
-                      className="w-full bg-[#ff7f00] text-white py-3 rounded-lg font-semibold hover:bg-orange-600"
+                      className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition shadow-md"
                     >
                       Continue to Payment
                     </button>
@@ -335,14 +335,14 @@ export default function BookingPage() {
 
               {paymentStep === 'payment' && (
                 <>
-                  <h2 className="text-2xl font-bold text-[#1a2e5e] mb-6">Payment (Demo)</h2>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-6">Payment (Demo)</h2>
                   
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
-                    <p className="text-blue-800 font-medium mb-2">Demo Payment Mode</p>
-                    <p className="text-blue-700 text-sm">
+                  <div className="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-6 mb-6">
+                    <p className="text-blue-900 font-medium mb-2">Demo Payment Mode</p>
+                    <p className="text-blue-800 text-sm">
                       This is a demo payment. Use any card details to proceed:
                     </p>
-                    <p className="text-blue-700 text-sm mt-2">
+                    <p className="text-blue-800 text-sm mt-2">
                       Card: 4242 4242 4242 4242 | Exp: 12/26 | CVC: 123
                     </p>
                   </div>
@@ -354,7 +354,7 @@ export default function BookingPage() {
                     </div>
                     <div className="border-t pt-4 flex justify-between items-center font-bold text-lg">
                       <span>Total Amount:</span>
-                      <span className="text-[#ff7f00]">E${calculateTotal()}</span>
+                      <span className="bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">E${calculateTotal()}</span>
                     </div>
                   </div>
 
@@ -362,13 +362,13 @@ export default function BookingPage() {
                     <button
                       onClick={handleMockPayment}
                       disabled={submitting}
-                      className="w-full bg-[#ff7f00] text-white py-3 rounded-lg font-semibold hover:bg-orange-600 disabled:opacity-50"
+                      className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {submitting ? 'Processing Payment...' : 'Complete Payment'}
                     </button>
                     <button
                       onClick={() => setPaymentStep('details')}
-                      className="w-full border border-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-50"
+                      className="w-full border-2 border-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-50 transition"
                     >
                       Back
                     </button>
@@ -379,33 +379,33 @@ export default function BookingPage() {
               {paymentStep === 'confirmation' && (
                 <>
                   <div className="text-center mb-8">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
-                      <svg className="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                    <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
+                      <svg className="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
                     </div>
-                    <h2 className="text-3xl font-bold text-[#1a2e5e] mb-2">Booking Confirmed!</h2>
+                    <h2 className="text-3xl font-bold text-gray-900 mb-2">Booking Confirmed!</h2>
                     <p className="text-gray-600">Your car rental has been successfully booked.</p>
                   </div>
 
-                  <div className="bg-gray-50 rounded-lg p-6 mb-6">
-                    <h3 className="font-semibold text-[#1a2e5e] mb-4">Booking Summary</h3>
+                  <div className="bg-gradient-to-br from-blue-50 to-gray-50 rounded-lg p-6 mb-6 border border-blue-100">
+                    <h3 className="font-semibold text-gray-900 mb-4">Booking Summary</h3>
                     <div className="space-y-2 text-sm">
                       <p>
                         <span className="text-gray-600">Car:</span>
-                        <span className="font-semibold text-[#1a2e5e]"> {car.brand} {car.model}</span>
+                        <span className="font-semibold text-gray-900"> {car.brand} {car.model}</span>
                       </p>
                       <p>
                         <span className="text-gray-600">Pickup:</span>
-                        <span className="font-semibold text-[#1a2e5e]"> {formData.pickupDate} at {formData.pickupLocation}</span>
+                        <span className="font-semibold text-gray-900"> {formData.pickupDate} at {formData.pickupLocation}</span>
                       </p>
                       <p>
                         <span className="text-gray-600">Return:</span>
-                        <span className="font-semibold text-[#1a2e5e]"> {formData.returnDate} at {formData.returnLocation}</span>
+                        <span className="font-semibold text-gray-900"> {formData.returnDate} at {formData.returnLocation}</span>
                       </p>
-                      <p className="border-t pt-2 mt-2">
+                      <p className="border-t border-blue-200 pt-2 mt-2">
                         <span className="text-gray-600">Total Paid:</span>
-                        <span className="font-bold text-[#ff7f00]"> E${calculateTotal()}</span>
+                        <span className="font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent"> E${calculateTotal()}</span>
                       </p>
                     </div>
                   </div>
@@ -413,13 +413,13 @@ export default function BookingPage() {
                   <div className="flex gap-4">
                     <Link
                       href="/dashboard"
-                      className="flex-1 bg-[#ff7f00] text-white py-3 rounded-lg font-semibold hover:bg-orange-600 text-center"
+                      className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition shadow-md text-center"
                     >
                       View My Bookings
                     </Link>
                     <Link
                       href="/cars"
-                      className="flex-1 border border-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-50 text-center"
+                      className="flex-1 border-2 border-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-50 transition text-center"
                     >
                       Book Another Car
                     </Link>
