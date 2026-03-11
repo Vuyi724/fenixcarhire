@@ -4,7 +4,6 @@ import { useAuth } from '@/app/auth-context'
 import { AdminProtected } from '@/app/components/admin-protected'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
-import { useAuth } from '@/app/auth-context'
 
 interface Invoice {
   id: string

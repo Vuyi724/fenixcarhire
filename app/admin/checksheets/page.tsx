@@ -4,7 +4,6 @@ import { AdminProtected } from '@/app/components/admin-protected'
 import { useAuth } from '@/app/auth-context'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
-import { useAuth } from '@/app/auth-context'
 
 interface CheckSheet {
   id: string
