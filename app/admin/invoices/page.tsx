@@ -1,5 +1,7 @@
 'use client'
 
+import { useAuth } from '@/app/auth-context'
+import { AdminProtected } from '@/app/components/admin-protected'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/app/auth-context'
@@ -138,11 +140,11 @@ export default function InvoicesPage() {
         due_date: '',
         vehicle_type: '',
         rate_per_day: '',
-        quantity: '1',
+        quantity: '',
         kms_per_day: '',
         days: '',
-        excess: '0',
-        contract_fee: '200',
+        excess: '',
+        contract_fee: '',
         excess_kms_details: '',
       })
       setEditingId(null)
@@ -185,8 +187,9 @@ export default function InvoicesPage() {
   }
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-6">
+    <AdminProtected>
+      <div>
+        <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Invoices</h1>
           <p className="text-gray-600 mt-2">Manage customer invoices</p>
@@ -341,7 +344,7 @@ export default function InvoicesPage() {
                       value={formData.vehicle_type}
                       onChange={(e) => setFormData({ ...formData, vehicle_type: e.target.value })}
                       className="w-full border-0 focus:outline-none text-sm"
-                      placeholder="e.g., Siata"
+                      placeholder="Description"
                     />
                   </td>
                   <td className="px-3 py-2 text-center">
@@ -351,7 +354,7 @@ export default function InvoicesPage() {
                       value={formData.rate_per_day}
                       onChange={(e) => setFormData({ ...formData, rate_per_day: e.target.value })}
                       className="w-full border-0 text-center focus:outline-none text-sm"
-                      placeholder="1800.00"
+                      placeholder="0.00"
                     />
                   </td>
                   <td className="px-3 py-2 text-center">
@@ -360,7 +363,7 @@ export default function InvoicesPage() {
                       value={formData.quantity}
                       onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
                       className="w-full border-0 text-center focus:outline-none text-sm"
-                      defaultValue="1"
+                      placeholder="0"
                     />
                   </td>
                   <td className="px-3 py-2 text-center">
@@ -369,7 +372,7 @@ export default function InvoicesPage() {
                       value={formData.kms_per_day}
                       onChange={(e) => setFormData({ ...formData, kms_per_day: e.target.value })}
                       className="w-full border-0 text-center focus:outline-none text-sm"
-                      placeholder="300"
+                      placeholder="0"
                     />
                   </td>
                   <td className="px-3 py-2 text-center">
@@ -378,7 +381,7 @@ export default function InvoicesPage() {
                       value={formData.days}
                       onChange={(e) => setFormData({ ...formData, days: e.target.value })}
                       className="w-full border-0 text-center focus:outline-none text-sm"
-                      placeholder="7"
+                      placeholder="0"
                     />
                   </td>
                   <td className="px-3 py-2 text-center">
@@ -388,7 +391,7 @@ export default function InvoicesPage() {
                       value={formData.excess}
                       onChange={(e) => setFormData({ ...formData, excess: e.target.value })}
                       className="w-full border-0 text-center focus:outline-none text-sm"
-                      placeholder="0"
+                      placeholder="0.00"
                     />
                   </td>
                   <td className="px-3 py-2 text-right">E 0.00</td>
@@ -396,7 +399,7 @@ export default function InvoicesPage() {
                 <tr className="border-b border-gray-400">
                   <td className="px-3 py-2">2. Contract fee</td>
                   <td colSpan={5} className="px-3 py-2"></td>
-                  <td className="px-3 py-2 text-right">E 200.00</td>
+                  <td className="px-3 py-2 text-right">E 0.00</td>
                 </tr>
                 <tr>
                   <td className="px-3 py-2">3. Excess KMs</td>
@@ -406,7 +409,7 @@ export default function InvoicesPage() {
                       value={formData.excess_kms_details}
                       onChange={(e) => setFormData({ ...formData, excess_kms_details: e.target.value })}
                       className="w-full border-0 focus:outline-none text-sm text-gray-600"
-                      placeholder="e.g., MR187GP - 117KM"
+                      placeholder="Details"
                     />
                   </td>
                   <td className="px-3 py-2 text-right">E 0.00</td>
@@ -428,15 +431,15 @@ export default function InvoicesPage() {
                   <tbody>
                     <tr className="border-t-2 border-gray-400">
                       <td className="px-3 py-2 font-semibold text-gray-900">Subtotal</td>
-                      <td className="px-3 py-2 text-right text-gray-900">E 6 781.00</td>
+                      <td className="px-3 py-2 text-right text-gray-900">E 0.00</td>
                     </tr>
                     <tr>
                       <td className="px-3 py-2 font-semibold text-gray-900">VAT - 15%</td>
-                      <td className="px-3 py-2 text-right text-gray-900">E 1 017.15</td>
+                      <td className="px-3 py-2 text-right text-gray-900">E 0.00</td>
                     </tr>
                     <tr className="border-t-2 border-gray-900 font-bold text-lg">
                       <td className="px-3 py-2 text-gray-900">Total</td>
-                      <td className="px-3 py-2 text-right text-gray-900">E 7 798.15</td>
+                      <td className="px-3 py-2 text-right text-gray-900">E 0.00</td>
                     </tr>
                   </tbody>
                 </table>
@@ -534,6 +537,7 @@ export default function InvoicesPage() {
           </table>
         )}
       </div>
-    </div>
+      </div>
+    </AdminProtected>
   )
 }

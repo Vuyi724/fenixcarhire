@@ -1,5 +1,7 @@
 'use client'
 
+import { AdminProtected } from '@/app/components/admin-protected'
+import { useAuth } from '@/app/auth-context'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 
@@ -134,8 +136,9 @@ export default function QuotationsPage() {
   }
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-6">
+    <AdminProtected>
+      <div>
+        <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Quotations & Invoices</h1>
           <p className="text-gray-600 mt-2">Create and manage customer quotations</p>
@@ -392,6 +395,7 @@ export default function QuotationsPage() {
           </table>
         )}
       </div>
-    </div>
+      </div>
+    </AdminProtected>
   )
 }
