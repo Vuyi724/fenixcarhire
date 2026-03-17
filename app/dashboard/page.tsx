@@ -83,16 +83,16 @@ export default function DashboardPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-gray-100">
       {/* Navigation */}
-      <nav className="bg-white shadow-sm">
+      <nav className="bg-white/80 backdrop-blur-md shadow-sm border-b border-blue-100">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold text-[#1a2e5e]">
+          <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
             Fenix Car Hire
           </Link>
           <div className="flex gap-4 items-center">
             <span className="text-gray-600">{user.email}</span>
-            <Link href="/cars" className="text-[#ff7f00] font-semibold hover:underline">
+            <Link href="/cars" className="text-blue-600 font-semibold hover:text-blue-800 transition">
               Browse Cars
             </Link>
             <button
@@ -107,19 +107,19 @@ export default function DashboardPage() {
 
       <div className="max-w-6xl mx-auto px-6 py-12">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-[#1a2e5e] mb-2">My Bookings</h1>
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-2">My Bookings</h1>
           <p className="text-gray-600">View and manage all your car rental reservations</p>
         </div>
 
         {bookings.length === 0 ? (
-          <div className="bg-white rounded-lg shadow-md p-12 text-center">
+          <div className="bg-white rounded-lg shadow-md p-12 text-center border border-blue-100">
             <h2 className="text-2xl font-semibold text-gray-700 mb-4">No Bookings Yet</h2>
             <p className="text-gray-600 mb-6">
               You haven't made any car rental bookings. Browse our available cars and make your first booking!
             </p>
             <Link
               href="/cars"
-              className="inline-block bg-[#ff7f00] text-white px-8 py-3 rounded-lg font-semibold hover:bg-orange-600"
+              className="inline-block bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition shadow-md"
             >
               Browse Available Cars
             </Link>
@@ -127,7 +127,7 @@ export default function DashboardPage() {
         ) : (
           <div className="space-y-6">
             {bookings.map((booking) => (
-              <div key={booking.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
+              <div key={booking.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition border border-blue-100">
                 <div className="flex flex-col md:flex-row">
                   {/* Car Image */}
                   {booking.cars && (
@@ -145,7 +145,7 @@ export default function DashboardPage() {
                     <div className="flex justify-between items-start mb-4">
                       <div>
                         {booking.cars && (
-                          <h3 className="text-2xl font-bold text-[#1a2e5e]">
+                          <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
                             {booking.cars.brand} {booking.cars.model}
                           </h3>
                         )}
@@ -183,13 +183,13 @@ export default function DashboardPage() {
                       </div>
                       <div className="text-right">
                         <p className="text-xs text-gray-600 uppercase mb-1">Total Cost</p>
-                        <p className="text-2xl font-bold text-[#ff7f00]">
+                        <p className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">
                           E${booking.total_price}
                         </p>
                       </div>
                     </div>
 
-                    <div className="border-t pt-4 flex justify-between items-center">
+                    <div className="border-t border-blue-200 pt-4 flex justify-between items-center">
                       <div>
                         <p className="text-sm text-gray-600">Payment Status</p>
                         <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mt-1 ${

@@ -44,8 +44,8 @@ export default function SetupPage() {
 
           <div className="space-y-6">
             {/* Step 1 */}
-            <div className="border-l-4 border-[#ff7f00] pl-6 py-4">
-              <h2 className="text-xl font-bold text-[#1a2e5e] mb-2">Step 1: Access Supabase SQL Editor</h2>
+            <div className="border-l-4 border-blue-600 pl-6 py-4">
+              <h2 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-2">Step 1: Access Supabase SQL Editor</h2>
               <ol className="list-decimal list-inside space-y-2 text-gray-700">
                 <li>Log in to your Supabase project</li>
                 <li>Navigate to SQL Editor from the left sidebar</li>
@@ -54,8 +54,8 @@ export default function SetupPage() {
             </div>
 
             {/* Step 2 */}
-            <div className="border-l-4 border-[#ff7f00] pl-6 py-4">
-              <h2 className="text-xl font-bold text-[#1a2e5e] mb-2">Step 2: Run the Migration SQL</h2>
+            <div className="border-l-4 border-blue-600 pl-6 py-4">
+              <h2 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-2">Step 2: Run the Migration SQL</h2>
               <p className="text-gray-700 mb-3">Copy and paste the SQL below into the Supabase SQL Editor:</p>
               <div className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto font-mono text-sm mb-4">
                 <pre>{`-- Create users table (extended profile data alongside auth)
@@ -151,8 +151,8 @@ ON CONFLICT DO NOTHING;`}</pre>
             </div>
 
             {/* Step 3 */}
-            <div className="border-l-4 border-[#ff7f00] pl-6 py-4">
-              <h2 className="text-xl font-bold text-[#1a2e5e] mb-2">Step 3: Verify the Setup</h2>
+            <div className="border-l-4 border-blue-600 pl-6 py-4">
+              <h2 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-2">Step 3: Verify the Setup</h2>
               <ol className="list-decimal list-inside space-y-2 text-gray-700">
                 <li>Check the "Authentication" tab to verify RLS is enabled</li>
                 <li>Check the "Table Editor" to see all three tables created (users, cars, bookings)</li>
@@ -161,8 +161,8 @@ ON CONFLICT DO NOTHING;`}</pre>
             </div>
 
             {/* Step 4 */}
-            <div className="border-l-4 border-[#ff7f00] pl-6 py-4">
-              <h2 className="text-xl font-bold text-[#1a2e5e] mb-2">Step 4: Start Using the App</h2>
+            <div className="border-l-4 border-blue-600 pl-6 py-4">
+              <h2 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-2">Step 4: Start Using the App</h2>
               <ol className="list-decimal list-inside space-y-2 text-gray-700">
                 <li>Return to the app and sign up for an account</li>
                 <li>Browse available cars in the fleet</li>
@@ -186,7 +186,7 @@ ON CONFLICT DO NOTHING;`}</pre>
             </Link>
             <Link
               href="/login"
-              className="flex-1 text-center bg-[#ff7f00] text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-600"
+              className="flex-1 text-center bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition shadow-md"
             >
               Go to Login
             </Link>
