@@ -157,6 +157,15 @@ export default function BookingPage() {
             <Link href="/cars" className="text-blue-600 font-semibold hover:text-blue-800 transition">
               Back to Cars
             </Link>
+            <button
+              onClick={() => {
+                supabase.auth.signOut()
+                router.push('/')
+              }}
+              className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-2 rounded-lg hover:from-blue-700 hover:to-blue-800 transition shadow-md"
+            >
+              Logout
+            </button>
           </div>
         </div>
       </nav>
