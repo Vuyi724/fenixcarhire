@@ -12,7 +12,7 @@ export default function Home() {
     { name: 'Double-Cab Pickup', desc: 'Perfect for cargo and upcountry trips', image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%203-mje93k6c5ZS3CnpfhugUoTpJtbzlez.jpeg' },
     { name: 'SUV / 4x4', desc: 'Spacious and rugged for adventures', image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image11-gtoVct7GyBYxjL939xouZSrrunpi3r.jpeg' },
     { name: 'Sedan', desc: 'Fuel-efficient and comfortable', image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image16-r5MBKZYUfwvGome3vU64KLthxNMKBD.jpeg' },
-    { name: 'Van', desc: 'Comfortable for large groups', image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image7-V3mhI5AxN7a0zQTCHO5NVpPCtOLhMU.jpeg' },
+    { name: 'Quantum', desc: 'Comfortable for large groups', image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image7-V3mhI5AxN7a0zQTCHO5NVpPCtOLhMU.jpeg' },
     { name: 'Executive SUV', desc: 'Premium comfort for special occasions', image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%202-r1Dj77iGb3vNLOUN5CpgDFtAiVXTot.jpeg' },
     { name: 'Compact Car', desc: 'Affordable and easy to maneuver', image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image5-hXIHuFYbODkXB9FT9QQQVPC2bWL0Ta.jpeg' },
   ]

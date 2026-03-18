@@ -6,7 +6,7 @@
 
 :root {
   --primary: #1a2e5e;
-  --accent: #ff7f00;
+  --accent: #2563eb;
   --dark: #0d1b3d;
   --light: #f5f5f5;
   --gray-200: #e8e8e8;
@@ -100,7 +100,7 @@ h1, h2, h3, h4, h5, h6 {
 
 @layer components {
   .primary-btn {
-    @apply inline-flex items-center justify-center bg-[#ff7f00] text-white px-8 py-4 rounded-lg font-semibold transition-all hover:bg-[#e67e00] hover:shadow-lg;
+    @apply inline-flex items-center justify-center bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold transition-all hover:bg-blue-700 hover:shadow-lg;
   }
   
   .secondary-btn {

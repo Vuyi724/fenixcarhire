@@ -86,7 +86,7 @@ export default function CarsPage() {
                 supabase.auth.signOut()
                 router.push('/')
               }}
-              className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition"
+              className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-2 rounded-lg hover:from-blue-700 hover:to-blue-800 transition shadow-md"
             >
               Logout
             </button>
