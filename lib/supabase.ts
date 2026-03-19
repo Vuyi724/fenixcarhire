@@ -1,36 +1,25 @@
-import { createClient, SupabaseClient } from '@supabase/supabase-js'
+import { createBrowserClient } from '@supabase/ssr'
 
-let supabaseInstance: SupabaseClient | null = null
-
-function getSupabaseClient(): SupabaseClient {
-  if (supabaseInstance) {
-    return supabaseInstance
-  }
-
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder_key'
-
-  try {
-    supabaseInstance = createClient(supabaseUrl, supabaseKey)
-  } catch (error) {
-    console.error('[v0] Failed to initialize Supabase client:', error)
-  }
-
-  return supabaseInstance as SupabaseClient
+export function createClient() {
+  return createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  )
 }
 
+// For backward compatibility with existing code
 export const supabase = {
   get auth() {
-    return getSupabaseClient().auth
+    return createClient().auth
   },
   from(table: string) {
-    return getSupabaseClient().from(table)
+    return createClient().from(table)
   },
   rpc(fn: string, params?: any) {
-    return getSupabaseClient().rpc(fn, params)
+    return createClient().rpc(fn, params)
   },
   channel(name: string) {
-    return getSupabaseClient().channel(name)
+    return createClient().channel(name)
   },
 }
 

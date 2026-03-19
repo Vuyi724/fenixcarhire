@@ -69,6 +69,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       email,
       password,
       options: {
+        emailRedirectTo: `${window.location.origin}/`,
         data: {
           full_name: fullName,
         },
@@ -76,24 +77,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     })
 
     if (error) throw error
-
-    // Create user profile after signup
-    if (data.user) {
-      try {
-        await fetch('/api/users/create-profile', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            userId: data.user.id,
-            email: data.user.email,
-            fullName,
-          }),
-        })
-      } catch (profileError) {
-        console.error('Error creating user profile:', profileError)
-        // Don't throw - the auth signup succeeded
-      }
-    }
   }
 
   const signIn = async (email: string, password: string) => {
