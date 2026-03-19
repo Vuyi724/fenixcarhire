@@ -22,7 +22,12 @@ export default function LoginPage() {
       await signIn(email, password)
       router.push('/cars')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to sign in')
+      const message = err instanceof Error ? err.message : 'Failed to sign in'
+      if (message.toLowerCase().includes('email not confirmed')) {
+        setError('Please confirm your email address before signing in. Check your inbox for a confirmation link.')
+      } else {
+        setError(message)
+      }
     } finally {
       setLoading(false)
     }
