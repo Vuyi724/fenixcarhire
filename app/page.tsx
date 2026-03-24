@@ -36,7 +36,7 @@ export default function Home() {
             Fenix Car Hire
           </Link>
           <div className="flex gap-6 items-center">
-            <a href="https://www.facebook.com/profile.php?id=6158523326473" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-2">
+            <a href="https://www.facebook.com/profile.php?id=61585823326473" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-2">
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
               Follow
             </a>
@@ -145,7 +145,7 @@ export default function Home() {
             <p className="text-gray-600 text-lg leading-relaxed mb-8">
               We offer well-maintained Toyota sedans, SUVs, vans, and double-cab pickups for business, family, events, or adventures. Our commitment to quality and customer service ensures a smooth rental experience every time.
             </p>
-            <a href="https://www.facebook.com/profile.php?id=6158523326473" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-blue-600 font-bold text-lg hover:text-blue-700">
+            <a href="https://www.facebook.com/profile.php?id=61585823326473" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-blue-600 font-bold text-lg hover:text-blue-700">
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
               Follow us on Facebook
             </a>
@@ -236,7 +236,7 @@ export default function Home() {
               <Link href={user ? "/cars" : "/login"} className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-bold transition shadow-lg">
                 Start Your Journey
               </Link>
-              <a href="https://www.facebook.com/profile.php?id=6158523326473" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 border border-white text-white px-8 py-4 rounded-lg font-bold hover:bg-white/10 transition">
+              <a href="https://www.facebook.com/profile.php?id=61585823326473" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 border border-white text-white px-8 py-4 rounded-lg font-bold hover:bg-white/10 transition">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                 Join Our Page
               </a>
@@ -295,7 +295,7 @@ export default function Home() {
               <svg className="w-10 h-10 text-blue-600 mb-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Facebook</h3>
               <p className="text-gray-600 mb-4">Fenix Car Hire</p>
-              <a href="https://www.facebook.com/profile.php?id=6158523326473" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-blue-600 font-bold hover:text-blue-700">
+              <a href="https://www.facebook.com/profile.php?id=61585823326473" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-blue-600 font-bold hover:text-blue-700">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                 Visit Page →
               </a>
@@ -315,7 +315,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto text-center">
           <p className="mb-4">&copy; 2026 Fenix Car Hire. All rights reserved.</p>
           <div className="flex justify-center gap-6 mb-6">
-            <a href="https://www.facebook.com/profile.php?id=6158523326473" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition">
+            <a href="https://www.facebook.com/profile.php?id=61585823326473" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition">
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
             </a>
           </div>
