@@ -21,7 +21,7 @@ export default function SignUpPage() {
 
     try {
       await signUp(email, password, fullName)
-      router.push('/login')
+      router.push('/signup/success')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to sign up')
     } finally {
