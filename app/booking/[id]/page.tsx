@@ -16,7 +16,7 @@ export default function BookingPage() {
   const [car, setCar] = useState<Car | null>(null)
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
-  const [paymentStep, setPaymentStep] = useState<'details' | 'payment' | 'confirmation'>('details')
+  const [bookingStep, setBookingStep] = useState<'details' | 'confirmation'>('details')
   
   const [formData, setFormData] = useState({
     passengerName: '',
@@ -77,24 +77,15 @@ export default function BookingPage() {
     }))
   }
 
-  const handlePaymentClick = () => {
+  const handleSubmitBooking = async () => {
     if (!formData.passengerName || !formData.passengerEmail || !formData.passengerPhone || 
         !formData.pickupDate || !formData.returnDate || !formData.pickupLocation || !formData.returnLocation) {
       alert('Please fill in all details')
       return
     }
-    setPaymentStep('payment')
-  }
-
-  const handleMockPayment = async () => {
-    setPaymentStep('confirmation')
     
-    // Simulate payment processing
     setSubmitting(true)
     try {
-      // Simulate payment delay
-      await new Promise(resolve => setTimeout(resolve, 2000))
-
       // Create booking in database
       const { data, error } = await supabase
         .from('bookings')
@@ -110,20 +101,18 @@ export default function BookingPage() {
             passenger_email: formData.passengerEmail,
             passenger_phone: formData.passengerPhone,
             total_price: calculateTotal(),
-            status: 'confirmed',
-            payment_status: 'paid',
+            status: 'pending',
+            payment_status: 'pending',
           },
         ])
         .select()
 
       if (error) throw error
 
-      console.log('[v0] Booking created:', data)
-      setPaymentStep('confirmation')
+      setBookingStep('confirmation')
     } catch (error) {
       console.error('[v0] Booking error:', error)
       alert('Failed to create booking')
-      setPaymentStep('payment')
     } finally {
       setSubmitting(false)
     }
@@ -183,23 +172,11 @@ export default function BookingPage() {
                   <p>License: {car.license_plate}</p>
                 </div>
                 
-                <div className="bg-gradient-to-br from-blue-50 to-gray-50 p-4 rounded-lg border border-blue-100">
-                  <p className="text-gray-600 text-sm mb-2">Daily Rate</p>
-                  <p className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent mb-4">
-                    E${car.daily_rate}
-                  </p>
-                  
-                  {calculateDays() > 0 && (
-                    <>
-                      <div className="border-t border-blue-200 pt-4">
-                        <p className="text-gray-600 text-sm">Duration: {calculateDays()} days</p>
-                        <p className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mt-2">
-                          Total: E${calculateTotal()}
-                        </p>
-                      </div>
-                    </>
-                  )}
-                </div>
+                {calculateDays() > 0 && (
+                  <div className="bg-gradient-to-br from-blue-50 to-gray-50 p-4 rounded-lg border border-blue-100">
+                    <p className="text-gray-600 text-sm">Duration: {calculateDays()} days</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -207,7 +184,7 @@ export default function BookingPage() {
           {/* Booking Form */}
           <div className="md:col-span-2">
             <div className="bg-white rounded-xl shadow-lg p-8 border border-blue-100">
-              {paymentStep === 'details' && (
+              {bookingStep === 'details' && (
                 <>
                   <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-6">Booking Details</h2>
                   
@@ -324,59 +301,17 @@ export default function BookingPage() {
 
                     <button
                       type="button"
-                      onClick={handlePaymentClick}
-                      className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition shadow-md"
+                      onClick={handleSubmitBooking}
+                      disabled={submitting}
+                      className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition shadow-md disabled:opacity-50"
                     >
-                      Continue to Payment
+                      {submitting ? 'Submitting...' : 'Submit Booking Request'}
                     </button>
                   </form>
                 </>
               )}
 
-              {paymentStep === 'payment' && (
-                <>
-                  <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-6">Payment (Demo)</h2>
-                  
-                  <div className="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-lg p-6 mb-6">
-                    <p className="text-blue-900 font-medium mb-2">Demo Payment Mode</p>
-                    <p className="text-blue-800 text-sm">
-                      This is a demo payment. Use any card details to proceed:
-                    </p>
-                    <p className="text-blue-800 text-sm mt-2">
-                      Card: 4242 4242 4242 4242 | Exp: 12/26 | CVC: 123
-                    </p>
-                  </div>
-
-                  <div className="space-y-4 mb-6">
-                    <div className="flex justify-between text-gray-600">
-                      <span>Daily Rate:</span>
-                      <span>E${car.daily_rate} × {calculateDays()} days</span>
-                    </div>
-                    <div className="border-t border-blue-200 pt-4 flex justify-between items-center font-bold text-lg">
-                      <span>Total Amount:</span>
-                      <span className="bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">E${calculateTotal()}</span>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 gap-4">
-                    <button
-                      onClick={handleMockPayment}
-                      disabled={submitting}
-                      className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition shadow-md disabled:opacity-50"
-                    >
-                      {submitting ? 'Processing Payment...' : 'Complete Payment'}
-                    </button>
-                    <button
-                      onClick={() => setPaymentStep('details')}
-                      className="w-full border border-blue-200 text-blue-600 py-3 rounded-lg font-semibold hover:bg-blue-50 transition"
-                    >
-                      Back
-                    </button>
-                  </div>
-                </>
-              )}
-
-              {paymentStep === 'confirmation' && (
+              {bookingStep === 'confirmation' && (
                 <>
                   <div className="text-center mb-8">
                     <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
@@ -384,8 +319,8 @@ export default function BookingPage() {
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
                     </div>
-                    <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-2">Booking Confirmed!</h2>
-                    <p className="text-gray-600">Your car rental has been successfully booked.</p>
+                    <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-2">Booking Request Submitted!</h2>
+                    <p className="text-gray-600">Your booking request has been received. We will contact you shortly to confirm.</p>
                   </div>
 
                   <div className="bg-gradient-to-br from-blue-50 to-gray-50 rounded-lg p-6 mb-6 border border-blue-100">
@@ -402,10 +337,6 @@ export default function BookingPage() {
                       <p>
                         <span className="text-gray-600">Return:</span>
                         <span className="font-semibold text-gray-900"> {formData.returnDate} at {formData.returnLocation}</span>
-                      </p>
-                      <p className="border-t border-blue-200 pt-2 mt-2">
-                        <span className="text-gray-600">Total Paid:</span>
-                        <span className="font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent"> E${calculateTotal()}</span>
                       </p>
                     </div>
                   </div>

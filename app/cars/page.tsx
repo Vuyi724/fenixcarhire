@@ -201,18 +201,12 @@ export default function CarsPage() {
                   </div>
 
                   {/* Footer */}
-                  <div className="border-t border-gray-200 pt-4 flex justify-between items-center">
-                    <div>
-                      <p className="text-xs text-gray-600 mb-1">Daily Rate</p>
-                      <p className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">
-                        E${car.daily_rate}
-                      </p>
-                    </div>
+                  <div className="border-t border-gray-200 pt-4 flex justify-end">
                     <Link
                       href={`/booking/${car.id}`}
                       className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-5 py-2.5 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition shadow-md"
                     >
-                      Book
+                      Book Now
                     </Link>
                   </div>
                 </div>
