@@ -42,7 +42,13 @@ export default function LoginPage() {
 
         {error && (
           <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
-            {error}
+            <p className="font-medium">{error}</p>
+            {error.toLowerCase().includes('email not confirmed') && (
+              <p className="text-sm mt-2">
+                Please check your inbox and click the confirmation link we sent you. 
+                Check your spam folder if you do not see it.
+              </p>
+            )}
           </div>
         )}
 
