@@ -183,23 +183,11 @@ export default function BookingPage() {
                   <p>License: {car.license_plate}</p>
                 </div>
                 
-                <div className="bg-gradient-to-br from-blue-50 to-gray-50 p-4 rounded-lg border border-blue-100">
-                  <p className="text-gray-600 text-sm mb-2">Daily Rate</p>
-                  <p className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent mb-4">
-                    E${car.daily_rate}
-                  </p>
-                  
-                  {calculateDays() > 0 && (
-                    <>
-                      <div className="border-t border-blue-200 pt-4">
-                        <p className="text-gray-600 text-sm">Duration: {calculateDays()} days</p>
-                        <p className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mt-2">
-                          Total: E${calculateTotal()}
-                        </p>
-                      </div>
-                    </>
-                  )}
-                </div>
+                {calculateDays() > 0 && (
+                  <div className="bg-gradient-to-br from-blue-50 to-gray-50 p-4 rounded-lg border border-blue-100">
+                    <p className="text-gray-600 text-sm">Duration: {calculateDays()} days</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -349,12 +337,8 @@ export default function BookingPage() {
 
                   <div className="space-y-4 mb-6">
                     <div className="flex justify-between text-gray-600">
-                      <span>Daily Rate:</span>
-                      <span>E${car.daily_rate} × {calculateDays()} days</span>
-                    </div>
-                    <div className="border-t border-blue-200 pt-4 flex justify-between items-center font-bold text-lg">
-                      <span>Total Amount:</span>
-                      <span className="bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">E${calculateTotal()}</span>
+                      <span>Duration:</span>
+                      <span>{calculateDays()} days</span>
                     </div>
                   </div>
 
@@ -402,10 +386,6 @@ export default function BookingPage() {
                       <p>
                         <span className="text-gray-600">Return:</span>
                         <span className="font-semibold text-gray-900"> {formData.returnDate} at {formData.returnLocation}</span>
-                      </p>
-                      <p className="border-t border-blue-200 pt-2 mt-2">
-                        <span className="text-gray-600">Total Paid:</span>
-                        <span className="font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent"> E${calculateTotal()}</span>
                       </p>
                     </div>
                   </div>
