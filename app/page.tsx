@@ -312,14 +312,124 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="bg-gray-900 text-gray-300 py-12 px-6">
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="mb-4">&copy; 2026 Fenix Car Hire. All rights reserved.</p>
-          <div className="flex justify-center gap-6 mb-6">
-            <a href="https://www.facebook.com/profile.php?id=61585823326473" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition">
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            </a>
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            {/* Quick Links */}
+            <div>
+              <h4 className="font-bold text-white mb-4">Quick Links</h4>
+              <ul className="space-y-2">
+                <li>
+                  <Link href="/" className="hover:text-blue-400 transition">
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/cars" className="hover:text-blue-400 transition">
+                    Our Fleet
+                  </Link>
+                </li>
+                <li>
+                  <a href="#services" className="hover:text-blue-400 transition">
+                    Services
+                  </a>
+                </li>
+                <li>
+                  <a href="#contact" className="hover:text-blue-400 transition">
+                    Contact
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Services */}
+            <div>
+              <h4 className="font-bold text-white mb-4">Services</h4>
+              <ul className="space-y-2">
+                <li>
+                  <a href="#" className="hover:text-blue-400 transition">
+                    Self-Drive Rentals
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-blue-400 transition">
+                    Chauffeur Service
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-blue-400 transition">
+                    Airport Transfers
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-blue-400 transition">
+                    Corporate Packages
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Contact */}
+            <div>
+              <h4 className="font-bold text-white mb-4">Contact Us</h4>
+              <ul className="space-y-2">
+                <li>
+                  <a href="tel:+26876829797" className="hover:text-blue-400 transition">
+                    (+268) 768 29797
+                  </a>
+                </li>
+                <li>
+                  <a href="mailto:reception@fenix.co.sz" className="hover:text-blue-400 transition">
+                    reception@fenix.co.sz
+                  </a>
+                </li>
+                <li className="pt-2">
+                  <a href="https://wa.me/26876829797" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-blue-400 transition">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004a9.87 9.87 0 00-4.781 1.158l-.386.214-4.011-.959.976 3.826a9.05 9.05 0 00-.458 4.719c.8 4.83 4.783 8.521 9.616 8.524h.004c5.316 0 9.711-4.343 9.88-10.044.12-4.993-3.997-9.26-8.906-9.434"/></svg>
+                    WhatsApp
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* About */}
+            <div>
+              <h4 className="font-bold text-white mb-4">About</h4>
+              <ul className="space-y-2">
+                <li>
+                  <a href="#about" className="hover:text-blue-400 transition">
+                    About Us
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-blue-400 transition">
+                    Our Fleet
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.facebook.com/profile.php?id=61585823326473" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition">
+                    Follow Us
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-blue-400 transition">
+                    Location
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
-          <p className="text-sm">Designed with passion for your rental experience</p>
+
+          <div className="border-t border-gray-700 pt-8">
+            <div className="flex flex-col md:flex-row justify-between items-center">
+              <p className="mb-4 md:mb-0">&copy; 2026 Fenix Car Hire. All rights reserved.</p>
+              <div className="flex justify-center gap-6">
+                <a href="https://www.facebook.com/profile.php?id=61585823326473" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition">
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+              </div>
+            </div>
+            <p className="text-sm text-center mt-6">Designed with passion for your rental experience</p>
+          </div>
         </div>
       </footer>
     </main>
