@@ -183,23 +183,7 @@ export default function BookingPage() {
                   <p>License: {car.license_plate}</p>
                 </div>
                 
-                <div className="bg-gradient-to-br from-blue-50 to-gray-50 p-4 rounded-lg border border-blue-100">
-                  <p className="text-gray-600 text-sm mb-2">Daily Rate</p>
-                  <p className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent mb-4">
-                    E${car.daily_rate}
-                  </p>
-                  
-                  {calculateDays() > 0 && (
-                    <>
-                      <div className="border-t border-blue-200 pt-4">
-                        <p className="text-gray-600 text-sm">Duration: {calculateDays()} days</p>
-                        <p className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mt-2">
-                          Total: E${calculateTotal()}
-                        </p>
-                      </div>
-                    </>
-                  )}
-                </div>
+
               </div>
             </div>
           </div>
@@ -325,7 +309,7 @@ export default function BookingPage() {
                     <button
                       type="button"
                       onClick={handlePaymentClick}
-                      className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition shadow-md"
+                      className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition shadow-md hidden"
                     >
                       Continue to Payment
                     </button>
