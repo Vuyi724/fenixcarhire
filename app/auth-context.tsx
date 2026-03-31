@@ -73,31 +73,46 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     
     // Get the origin safely in client component
     const origin = typeof window !== 'undefined' ? window.location.origin : ''
+    const redirectUrl = process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || `${origin}/cars`
     
-    const { error } = await supabase.auth.signUp({
+    console.log('[v0] SignUp - Redirect URL:', redirectUrl)
+    console.log('[v0] SignUp - Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL)
+    
+    const { error, data } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: {
           full_name: fullName,
         },
-        emailRedirectTo: process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL ||
-          `${origin}/cars`,
+        emailRedirectTo: redirectUrl,
       },
     })
 
-    if (error) throw error
+    console.log('[v0] SignUp - Response:', { error, data })
+
+    if (error) {
+      console.error('[v0] SignUp - Full error:', error)
+      throw new Error(error.message || 'Sign up failed')
+    }
     // Note: User profile is auto-created via database trigger
   }
 
   const signIn = async (email: string, password: string) => {
     const supabase = createClient()
-    const { error } = await supabase.auth.signInWithPassword({
+    console.log('[v0] SignIn - Attempting with email:', email)
+    
+    const { error, data } = await supabase.auth.signInWithPassword({
       email,
       password,
     })
 
-    if (error) throw error
+    console.log('[v0] SignIn - Response:', { error, data })
+    
+    if (error) {
+      console.error('[v0] SignIn - Full error:', error)
+      throw new Error(error.message || 'Sign in failed')
+    }
   }
 
   const signOut = async () => {
