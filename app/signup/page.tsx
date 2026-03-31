@@ -20,10 +20,28 @@ export default function SignUpPage() {
     setLoading(true)
 
     try {
+      if (!fullName.trim()) {
+        setError('Please enter your full name')
+        setLoading(false)
+        return
+      }
+      if (!email.trim()) {
+        setError('Please enter your email address')
+        setLoading(false)
+        return
+      }
+      if (password.length < 6) {
+        setError('Password must be at least 6 characters')
+        setLoading(false)
+        return
+      }
+
       await signUp(email, password, fullName)
       router.push('/signup/success')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to sign up')
+      const errorMessage = err instanceof Error ? err.message : 'Failed to sign up'
+      console.error('[v0] Signup error:', errorMessage)
+      setError(errorMessage)
     } finally {
       setLoading(false)
     }

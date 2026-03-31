@@ -19,10 +19,23 @@ export default function LoginPage() {
     setLoading(true)
 
     try {
+      if (!email.trim()) {
+        setError('Please enter your email address')
+        setLoading(false)
+        return
+      }
+      if (!password) {
+        setError('Please enter your password')
+        setLoading(false)
+        return
+      }
+
       await signIn(email, password)
       router.push('/cars')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to sign in')
+      const errorMessage = err instanceof Error ? err.message : 'Failed to sign in'
+      console.error('[v0] Login error:', errorMessage)
+      setError(errorMessage)
     } finally {
       setLoading(false)
     }

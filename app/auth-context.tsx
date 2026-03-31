@@ -70,6 +70,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signUp = async (email: string, password: string, fullName: string) => {
     const supabase = createClient()
+    
+    // Get the origin safely in client component
+    const origin = typeof window !== 'undefined' ? window.location.origin : ''
+    
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -78,7 +82,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           full_name: fullName,
         },
         emailRedirectTo: process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL ||
-          `${window.location.origin}/cars`,
+          `${origin}/cars`,
       },
     })
 
